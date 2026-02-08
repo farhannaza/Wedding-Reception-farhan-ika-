@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 40 33% 97%;
+    --foreground: 0 0% 10%;
+    --card: 40 40% 95%;
+    --card-foreground: 0 0% 10%;
+    --popover: 40 33% 97%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 43 56% 54%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 40 20% 90%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 40 15% 92%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 43 56% 54%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 43 30% 80%;
+    --input: 43 30% 80%;
+    --ring: 43 56% 54%;
+    --chart-1: 43 56% 54%;
+    --chart-2: 43 40% 40%;
+    --chart-3: 0 0% 20%;
+    --chart-4: 40 30% 70%;
+    --chart-5: 40 20% 85%;
+    --radius: 0.375rem;
+    --gold: 43 56% 54%;
+    --gold-light: 43 50% 70%;
+    --gold-dark: 43 60% 35%;
+    --cream: 40 33% 97%;
+    --cream-dark: 40 25% 92%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Decorative ornament styles */
+.ornament::before,
+.ornament::after {
+  content: "";
+  display: inline-block;
+  width: 60px;
+  height: 1px;
+  background: hsl(var(--gold));
+  vertical-align: middle;
+  margin: 0 16px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--cream));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold));
+  border-radius: 4px;
+}
+
+/* Animation utilities */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
