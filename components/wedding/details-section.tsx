@@ -62,7 +62,7 @@ export function DetailsSection() {
 
         {/* slightly smaller than before but still darker */}
         <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
-          Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato'| Datin | Tuan | Puan | Encik | Cik <br />ke majlis
+          Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato' | Datin | Tuan | Puan | Encik | Cik <br />ke majlis
           perkahwinan anakanda kami
         </p>
       </div>
