@@ -56,7 +56,7 @@ export function DetailsSection() {
         {/* a bit more smaller */}
         <h2 className="font-serif text-lg font-bold text-foreground sm:text-xl md:text-2xl lg:text-3xl">
           <span className="text-balance">
-            Haji Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hajah Norsiati Binti Shamsul Bahari
+            Hj Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
           </span>
         </h2>
 
