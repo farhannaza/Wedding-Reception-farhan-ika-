@@ -41,18 +41,15 @@ export function DetailsSection() {
         <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
           Detail
         </p>
-
-        {/* slightly smaller than before but still darker */}
-        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
-          Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T
-        </p>
-
         <div className="flex items-center gap-4">
           <div className="h-px w-12 bg-gold/40" />
           <div className="h-2 w-2 rotate-45 border border-gold/50" />
           <div className="h-px w-12 bg-gold/40" />
         </div>
-
+        {/* slightly smaller than before but still darker */}
+        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
+          Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T
+        </p>  
         {/* a bit more smaller */}
         <h2 className="font-serif text-lg font-bold text-foreground sm:text-xl md:text-2xl lg:text-3xl">
           <span className="text-balance">
