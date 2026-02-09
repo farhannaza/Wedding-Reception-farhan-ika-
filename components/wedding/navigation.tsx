@@ -29,13 +29,13 @@ export function Navigation() {
           href="#details"
           className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-gold/70 transition-colors hover:text-gold md:text-xs"
         >
-          Details
+          Detail
         </a>
         <a
           href="#venue"
           className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-gold/70 transition-colors hover:text-gold md:text-xs"
         >
-          Venue
+          Lokasi
         </a>
         <span className="font-serif text-base font-bold text-white drop-shadow-sm">
           F & S

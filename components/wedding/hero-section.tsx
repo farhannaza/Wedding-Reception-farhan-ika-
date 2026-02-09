@@ -34,9 +34,9 @@ export function HeroSection() {
       <div className="relative z-10 flex flex-col items-center gap-5 sm:gap-6">
         {/* Subtitle */}
         <p className="animate-fade-in-up font-sans text-[11px] font-light uppercase leading-relaxed tracking-[0.15em] text-gold-light opacity-0 sm:text-xs sm:tracking-[0.3em] md:text-sm md:tracking-[0.4em]">
-          You are cordially invited to
+          Majlis Kesyukuran
           <br className="sm:hidden" />
-          {" "}the wedding reception of
+          {" "}Perkahwinan
         </p>
 
         {/* Decorative line */}
@@ -71,7 +71,7 @@ export function HeroSection() {
         {/* Date */}
         <div className="animate-fade-in-up opacity-0 animation-delay-400">
           <p className="font-sans text-[13px] font-light uppercase tracking-[0.2em] text-gold-light sm:text-sm sm:tracking-[0.3em] md:text-base">
-            Sunday, 18th October 2026
+            Ahad, 18 oktober 2026
           </p>
         </div>
 

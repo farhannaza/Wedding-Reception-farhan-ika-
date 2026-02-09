@@ -36,19 +36,21 @@ export function DetailsSection() {
       {/* Section header */}
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center sm:gap-4">
         <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
-          The Details
+          Detail
         </p>
         <h2 className="font-serif text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-          <span className="text-balance">Join Us in Celebration</span>
+          <span className="text-balance">Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T</span>
         </h2>
         <div className="flex items-center gap-4">
           <div className="h-px w-12 bg-gold/40" />
           <div className="h-2 w-2 rotate-45 border border-gold/50" />
           <div className="h-px w-12 bg-gold/40" />
         </div>
-        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm md:text-base">
-          We request the pleasure of your company at our wedding reception.
-          Your presence would make our special day even more memorable.
+        <p className="max-w-sm font-sans text-sm leading-relaxed text-foreground/80 sm:max-w-lg sm:text-base md:text-lg">
+        Haji Hasrat Nazarudin Bin Abdul Rahman & Hajah Norsiati Binti Shamsul Bahari
+        </p>
+        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm md:text-base"> 
+        Dengan sukacitanya ingin mengundang Ybhg Dato’ Seri/Datin Seri, Dato'/Datin, Tuan/Puan, Encik/Cik ke majlis Raja Sehari putera kami dan pasangannya untuk memberikan kesyukuran kami.
         </p>
       </div>
 
