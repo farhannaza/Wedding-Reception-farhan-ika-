@@ -18,7 +18,10 @@ function DetailCard({
       <h3 className="font-serif text-lg font-semibold text-foreground">{title}</h3>
       <div className="flex flex-col gap-0.5">
         {lines.map((line) => (
-          <p key={line} className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+          <p
+            key={line}
+            className="font-sans text-[13px] leading-relaxed text-foreground/80 sm:text-sm md:text-base"
+          >
             {line}
           </p>
         ))}
@@ -38,19 +41,29 @@ export function DetailsSection() {
         <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
           Detail
         </p>
-        <h2 className="font-serif text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-          <span className="text-balance">Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T</span>
-        </h2>
+
+        {/* slightly smaller than before but still darker */}
+        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
+          Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T
+        </p>
+
         <div className="flex items-center gap-4">
           <div className="h-px w-12 bg-gold/40" />
           <div className="h-2 w-2 rotate-45 border border-gold/50" />
           <div className="h-px w-12 bg-gold/40" />
         </div>
-        <p className="max-w-sm font-sans text-sm leading-relaxed text-foreground/80 sm:max-w-lg sm:text-base md:text-lg">
-        Haji Hasrat Nazarudin Bin Abdul Rahman & Hajah Norsiati Binti Shamsul Bahari
-        </p>
-        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-muted-foreground sm:max-w-lg sm:text-sm md:text-base"> 
-        Dengan sukacitanya ingin mengundang Ybhg Dato’ Seri/Datin Seri, Dato'/Datin, Tuan/Puan, Encik/Cik ke majlis Raja Sehari putera kami dan pasangannya untuk memberikan kesyukuran kami.
+
+        {/* a bit more smaller */}
+        <h2 className="font-serif text-lg font-bold text-foreground sm:text-xl md:text-2xl lg:text-3xl">
+          <span className="text-balance">
+            Haji Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hajah Norsiati Binti Shamsul Bahari
+          </span>
+        </h2>
+
+        {/* slightly smaller than before but still darker */}
+        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
+          Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato'| Datin | Tuan | Puan | Encik | Cik <br />ke majlis
+          perkahwinan anakanda kami
         </p>
       </div>
 
@@ -58,18 +71,18 @@ export function DetailsSection() {
       <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-8 sm:mt-14 sm:gap-10 md:grid-cols-3 md:gap-12">
         <DetailCard
           icon={<CalendarDays className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Date"
-          lines={["Sunday", "18th October 2026"]}
+          title="Tarikh"
+          lines={["Ahad", "18 Oktober 2026"]}
         />
         <DetailCard
           icon={<Clock className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Time"
-          lines={["Ceremony at 11:00 AM", "End at 4:00 PM"]}
+          title="Masa"
+          lines={["11:00 AM -", "4:00 PM"]}
         />
         <DetailCard
           icon={<MapPin className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Venue"
-          lines={["British Vogue", "By Kamalinda"]}
+          title="Lokasi"
+          lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
         />
       </div>
 
