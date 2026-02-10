@@ -3,7 +3,7 @@ import { Reveal } from "@/components/reveal"
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
+    <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
       {/* Background image */}
       <Image
         src="/images/mirror.jpg"
