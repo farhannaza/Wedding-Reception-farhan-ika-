@@ -54,9 +54,11 @@ export function Navigation() {
         </a>
       </nav>
 
-      {/* Mobile bottom nav - sticky, always visible on mobile */}
+      {/* Mobile bottom nav - sticky, appears after scrolling past hero */}
       <nav
-        className="fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md md:hidden"
+        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-transform transition-opacity duration-500 ease-out md:hidden ${
+          scrolled ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
+        }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         aria-label="Mobile navigation"
       >
