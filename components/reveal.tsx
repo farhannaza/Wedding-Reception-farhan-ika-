@@ -39,7 +39,7 @@ export function Reveal({
   }, [])
 
   const base =
-    "transition-all duration-1000 ease-out will-change-transform opacity-0"
+    "transition-all duration-[1400ms] ease-out will-change-transform opacity-0"
 
   const directionClass = {
     up: "translate-y-10",
@@ -50,10 +50,12 @@ export function Reveal({
 
   const visible = "opacity-100 translate-x-0 translate-y-0"
 
+  const totalDelay = 200 + delay
+
   return (
     <div
       ref={ref}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={{ transitionDelay: `${totalDelay}ms` }}
       className={`${base} ${directionClass} ${
         isVisible ? visible : ""
       }`}
