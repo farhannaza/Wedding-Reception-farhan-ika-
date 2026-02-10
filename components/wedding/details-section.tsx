@@ -62,6 +62,13 @@ export function DetailsSection() {
           Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato' | Datin | Tuan | Puan | Encik | Cik <br />ke majlis
           perkahwinan anakanda kami
         </p>
+
+        {/* Names of bride and groom */}
+        <h2 className="font-serif text-lg font-bold text-gold sm:text-xl md:text-2xl lg:text-3xl">
+          <span className="text-balance">
+            Muhammad Farhan Bin Hasrat Nazarudin &amp; <br /> Tuan Nur Syafika Binti Tuan Abdul Halim
+          </span>
+        </h2>
       </div>
 
       {/* Details grid */}
