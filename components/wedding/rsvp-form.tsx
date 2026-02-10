@@ -5,6 +5,7 @@ import React from "react"
 import { useState } from "react"
 import { submitRsvp } from "@/app/actions/rsvp"
 import { CheckCircle2, Loader2, Users, User, MessageSquare } from "lucide-react"
+import { Reveal } from "@/components/reveal"
 
 export function RsvpForm() {
   const [name, setName] = useState("")
@@ -38,25 +39,27 @@ export function RsvpForm() {
     return (
       <section id="rsvp" className="bg-background px-5 py-14 sm:px-6 md:py-28">
         <div className="mx-auto max-w-lg">
-          <div className="flex flex-col items-center gap-5 rounded-lg border border-gold/20 bg-card p-8 text-center shadow-sm sm:p-10">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gold/10">
-              <CheckCircle2 className="h-8 w-8 text-gold" />
+          <Reveal direction="up">
+            <div className="flex flex-col items-center gap-5 rounded-lg border border-gold/20 bg-card p-8 text-center shadow-sm sm:p-10">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gold/10">
+                <CheckCircle2 className="h-8 w-8 text-gold" />
+              </div>
+              <h3 className="font-serif text-2xl font-bold text-foreground">
+                Thank You!
+              </h3>
+              <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+                Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been
+                received. We look forward to celebrating with you!
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-gold/30" />
+                <svg className="h-3 w-3 text-gold/50" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+                <div className="h-px w-8 bg-gold/30" />
+              </div>
             </div>
-            <h3 className="font-serif text-2xl font-bold text-foreground">
-              Thank You!
-            </h3>
-            <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
-              Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been
-              received. We look forward to celebrating with you!
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="h-px w-8 bg-gold/30" />
-              <svg className="h-3 w-3 text-gold/50" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-              <div className="h-px w-8 bg-gold/30" />
-            </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     )
@@ -67,20 +70,28 @@ export function RsvpForm() {
       <div className="mx-auto max-w-lg">
         {/* Section header */}
         <div className="flex flex-col items-center gap-3 text-center sm:gap-4">
-          <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
-            RSVP
-          </p>
-          <h2 className="font-serif text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
-            <span className="text-balance">Kindly Respond</span>
-          </h2>
-          <div className="flex items-center gap-4">
-            <div className="h-px w-12 bg-gold/40" />
-            <div className="h-2 w-2 rotate-45 border border-gold/50" />
-            <div className="h-px w-12 bg-gold/40" />
-          </div>
-          <p className="max-w-sm font-sans text-[13px] leading-relaxed text-muted-foreground sm:max-w-md sm:text-sm md:text-base">
-            Please let us know if you will be joining us on our special day.
-          </p>
+          <Reveal>
+            <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
+              RSVP
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="font-serif text-2xl font-bold text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
+              <span className="text-balance">Kindly Respond</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={150}>
+            <div className="flex items-center gap-4">
+              <div className="h-px w-12 bg-gold/40" />
+              <div className="h-2 w-2 rotate-45 border border-gold/50" />
+              <div className="h-px w-12 bg-gold/40" />
+            </div>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="max-w-sm font-sans text-[13px] leading-relaxed text-muted-foreground sm:max-w-md sm:text-sm md:text-base">
+              Please let us know if you will be joining us on our special day.
+            </p>
+          </Reveal>
         </div>
 
         {/* Form */}

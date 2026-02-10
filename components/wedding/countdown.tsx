@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Reveal } from "@/components/reveal"
 
 function calculateTimeLeft() {
   const weddingDate = new Date("2026-10-18T11:00:00+08:00")
@@ -48,25 +49,33 @@ export function Countdown() {
     <section className="bg-background px-5 py-14 sm:px-6 md:py-20">
       <div className="mx-auto max-w-xl">
         <div className="flex flex-col items-center gap-4 text-center sm:gap-6">
-          <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
-            Counting Down
-          </p>
-          <h2 className="font-serif text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
-            Until Our Wedding
-          </h2>
-          <div className="flex items-center gap-4">
-            <div className="h-px w-8 bg-gold/40" />
-            <div className="h-1.5 w-1.5 rotate-45 border border-gold/50" />
-            <div className="h-px w-8 bg-gold/40" />
-          </div>
+          <Reveal>
+            <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
+              Counting Down
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="font-serif text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
+              Until Our Wedding
+            </h2>
+          </Reveal>
+          <Reveal delay={150}>
+            <div className="flex items-center gap-4">
+              <div className="h-px w-8 bg-gold/40" />
+              <div className="h-1.5 w-1.5 rotate-45 border border-gold/50" />
+              <div className="h-px w-8 bg-gold/40" />
+            </div>
+          </Reveal>
 
           {/* 2x2 grid on mobile, inline row on sm+ */}
-          <div className="mt-2 grid grid-cols-2 gap-4 sm:mt-4 sm:flex sm:items-center sm:gap-5 md:gap-6">
-            <TimeBlock value={time.days} label="Days" />
-            <TimeBlock value={time.hours} label="Hours" />
-            <TimeBlock value={time.minutes} label="Minutes" />
-            <TimeBlock value={time.seconds} label="Seconds" />
-          </div>
+          <Reveal delay={200}>
+            <div className="mt-2 grid grid-cols-2 gap-4 sm:mt-4 sm:flex sm:items-center sm:gap-5 md:gap-6">
+              <TimeBlock value={time.days} label="Days" />
+              <TimeBlock value={time.hours} label="Hours" />
+              <TimeBlock value={time.minutes} label="Minutes" />
+              <TimeBlock value={time.seconds} label="Seconds" />
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

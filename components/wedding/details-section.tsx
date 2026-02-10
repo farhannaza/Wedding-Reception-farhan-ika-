@@ -1,5 +1,6 @@
 import React from "react"
 import { CalendarDays, Clock, MapPin } from "lucide-react"
+import { Reveal } from "@/components/reveal"
 
 function DetailCard({
   icon,
@@ -38,56 +39,74 @@ export function DetailsSection() {
     >
       {/* Section header */}
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center sm:gap-4">
-        <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
-          Detail
-        </p>
-        <div className="flex items-center gap-4">
-          <div className="h-px w-12 bg-gold/40" />
-          <div className="h-2 w-2 rotate-45 border border-gold/50" />
-          <div className="h-px w-12 bg-gold/40" />
-        </div>
+        <Reveal>
+          <p className="font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
+            Detail
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <div className="flex items-center gap-4">
+            <div className="h-px w-12 bg-gold/40" />
+            <div className="h-2 w-2 rotate-45 border border-gold/50" />
+            <div className="h-px w-12 bg-gold/40" />
+          </div>
+        </Reveal>
         {/* slightly smaller than before but still darker */}
-        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
-          Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T
-        </p>  
+        <Reveal delay={150}>
+          <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
+            Dengan Penuh Kesyukuran ke Hadrat Allah S.W.T
+          </p>  
+        </Reveal>
         {/* a bit more smaller */}
-        <h2 className="font-serif text-lg font-bold text-foreground sm:text-xl md:text-2xl lg:text-3xl">
-          <span className="text-balance">
-            Hj Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
-          </span>
-        </h2>
+        <Reveal delay={200}>
+          <h2 className="font-serif text-lg font-bold text-foreground sm:text-xl md:text-2xl lg:text-3xl">
+            <span className="text-balance">
+              Hj Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
+            </span>
+          </h2>
+        </Reveal>
 
         {/* slightly smaller than before but still darker */}
-        <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
-          Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato' | Datin | Tuan | Puan | Encik | Cik <br />ke majlis
-          perkahwinan anakanda kami
-        </p>
+        <Reveal delay={250}>
+          <p className="max-w-sm font-sans text-[13px] leading-relaxed text-foreground/80 sm:max-w-lg sm:text-sm md:text-base">
+            Dengan sukacitanya ingin mengundang  Ybhg <br /> Dato’ Seri | Datin Seri | Dato' | Datin | Tuan | Puan | Encik | Cik <br />ke majlis
+            perkahwinan anakanda kami
+          </p>
+        </Reveal>
 
         {/* Names of bride and groom */}
-        <h2 className="font-serif text-lg font-bold text-gold sm:text-xl md:text-2xl lg:text-3xl">
-          <span className="text-balance">
-            Muhammad Farhan Bin Hasrat Nazarudin &amp; <br /> Tuan Nur Syafika Binti Tuan Abdul Halim
-          </span>
-        </h2>
+        <Reveal delay={300}>
+          <h2 className="font-serif text-lg font-bold text-gold sm:text-xl md:text-2xl lg:text-3xl">
+            <span className="text-balance">
+              Muhammad Farhan Bin Hasrat Nazarudin &amp; <br /> Tuan Nur Syafika Binti Tuan Abdul Halim
+            </span>
+          </h2>
+        </Reveal>
       </div>
 
       {/* Details grid */}
       <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3 sm:gap-6">
-        <DetailCard
-          icon={<CalendarDays className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Tarikh"
-          lines={["Ahad", "18 Oktober 2026"]}
-        />
-        <DetailCard
-          icon={<Clock className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Masa"
-          lines={["11:00 AM -", "4:00 PM"]}
-        />
-        <DetailCard
-          icon={<MapPin className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-          title="Lokasi"
-          lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
-        />
+        <Reveal direction="up">
+          <DetailCard
+            icon={<CalendarDays className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
+            title="Tarikh"
+            lines={["Ahad", "18 Oktober 2026"]}
+          />
+        </Reveal>
+        <Reveal direction="up" delay={100}>
+          <DetailCard
+            icon={<Clock className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
+            title="Masa"
+            lines={["11:00 AM -", "4:00 PM"]}
+          />
+        </Reveal>
+        <Reveal direction="up" delay={200}>
+          <DetailCard
+            icon={<MapPin className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
+            title="Lokasi"
+            lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
+          />
+        </Reveal>
       </div>
 
       {/* Decorative bottom divider */}
