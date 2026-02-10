@@ -56,8 +56,8 @@ export function Navigation() {
 
       {/* Mobile bottom nav - sticky, large tap targets */}
       <nav
-        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transition-all duration-500 md:hidden ${
-          scrolled ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-transform transition-opacity duration-500 ease-out md:hidden ${
+          scrolled ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 pointer-events-none"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         aria-label="Mobile navigation"
