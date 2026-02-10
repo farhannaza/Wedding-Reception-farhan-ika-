@@ -61,7 +61,7 @@ export function DetailsSection() {
         <Reveal delay={200}>
           <h2 className="font-serif text-lg font-bold text-gold sm:text-xl md:text-2xl lg:text-3xl">
             <span className="text-balance">
-              Hj Hasrat Nazarudin Bin Abdul Rahman &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
+              Hj Hasrat Nazarudin Bin Abdul Rahman <br /> &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
             </span>
           </h2>
         </Reveal>
@@ -79,7 +79,7 @@ export function DetailsSection() {
         <Reveal delay={300}>
         <h2 className="font-serif italic text-xl font-bold text-foreground sm:text-2xl md:text-3xl lg:text-4xl">
             <span className="text-balance">
-              Muhammad Farhan Bin Hasrat Nazarudin &amp; <br /> Tuan Nur Syafika Binti Tuan Abdul Halim
+              Muhammad Farhan Bin Hasrat Nazarudin <br /> &amp; <br /> Tuan Nur Syafika Binti Tuan Abdul Halim
             </span>
           </h2>
         </Reveal>
