@@ -65,7 +65,7 @@ export function DetailsSection() {
       </div>
 
       {/* Details grid */}
-      <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-8 sm:mt-14 sm:grid-cols-3 sm:gap-10">
+      <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3 sm:gap-6">
         <DetailCard
           icon={<CalendarDays className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
           title="Tarikh"
