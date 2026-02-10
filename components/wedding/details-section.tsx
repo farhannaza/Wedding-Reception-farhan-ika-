@@ -59,7 +59,7 @@ export function DetailsSection() {
         </Reveal>
         {/* a bit more smaller */}
         <Reveal delay={200}>
-          <h2 className="font-serif text-lg font-bold text-gold sm:text-xl md:text-2xl lg:text-3xl">
+          <h2 className="font-serif text-base font-bold text-gold sm:text-lg md:text-xl lg:text-2xl">
             <span className="text-balance">
               Hj Hasrat Nazarudin Bin Abdul Rahman <br /> &amp; <br /> Hjh Norsiati Binti Shamsul Bahari
             </span>
