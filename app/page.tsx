@@ -5,12 +5,10 @@ import { VenueMap } from "@/components/wedding/venue-map"
 import { RsvpForm } from "@/components/wedding/rsvp-form"
 import { Footer } from "@/components/wedding/footer"
 import { Navigation } from "@/components/wedding/navigation"
-import { ScrollToTopOnLoad } from "@/components/scroll-to-top"
 
 export default function Page() {
   return (
     <main>
-      <ScrollToTopOnLoad />
       <Navigation />
       <HeroSection />
       <DetailsSection />
