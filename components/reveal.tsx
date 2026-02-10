@@ -39,13 +39,13 @@ export function Reveal({
   }, [])
 
   const base =
-    "transition-all duration-700 ease-out will-change-transform opacity-0"
+    "transition-all duration-1000 ease-out will-change-transform opacity-0"
 
   const directionClass = {
-    up: "translate-y-6",
-    down: "-translate-y-6",
-    left: "translate-x-6",
-    right: "-translate-x-6",
+    up: "translate-y-10",
+    down: "-translate-y-10",
+    left: "translate-x-10",
+    right: "-translate-x-10",
   }[direction]
 
   const visible = "opacity-100 translate-x-0 translate-y-0"
