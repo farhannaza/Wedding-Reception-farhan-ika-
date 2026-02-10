@@ -51,18 +51,36 @@ export function VenueMap() {
           </div>
         </div>
 
-        {/* Get directions link - full width on mobile for easy tapping */}
+        {/* Get directions links - Google Maps & Waze (logo buttons) */}
         <div className="mt-6 sm:mt-8 sm:flex sm:justify-center">
-          <a
-            /* ✅ Updated directions */
-            href={`https://www.google.com/maps/dir/?api=1&destination=${venueQuery}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-6 py-3 font-sans text-[13px] font-medium text-gold transition-all active:bg-gold/20 sm:min-h-0 sm:gap-3 sm:px-8 sm:text-sm sm:hover:border-gold/60 sm:hover:bg-gold/20"
-          >
-            <Navigation className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
-            Get Directions
-          </a>
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${venueQuery}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-gold/30 bg-background px-4 py-2 transition-all active:bg-gold/10 sm:min-h-0 sm:flex-none sm:px-6 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+            >
+              <span className="sr-only">Open in Google Maps</span>
+              <img
+                src="/images/google-maps-logo.svg"
+                alt="Google Maps"
+                className="h-7 w-auto sm:h-8"
+              />
+            </a>
+            <a
+              href={`https://waze.com/ul?q=${venueQuery}&navigate=yes`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-gold/30 bg-background px-4 py-2 transition-all active:bg-gold/10 sm:min-h-0 sm:flex-none sm:px-6 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+            >
+              <span className="sr-only">Open in Waze</span>
+              <img
+                src="/images/waze-logo.svg"
+                alt="Waze"
+                className="h-7 w-auto sm:h-8"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </section>
