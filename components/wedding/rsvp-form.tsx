@@ -4,12 +4,13 @@ import React from "react"
 
 import { useState } from "react"
 import { submitRsvp } from "@/app/actions/rsvp"
-import { CheckCircle2, Loader2, Users, User, MessageSquare } from "lucide-react"
+import { CheckCircle2, Loader2, Users, User, MessageSquare, Phone } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 
 export function RsvpForm() {
   const [name, setName] = useState("")
   const [pax, setPax] = useState(1)
+  const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -23,6 +24,7 @@ export function RsvpForm() {
     const result = await submitRsvp({
       guest_name: name.trim(),
       pax,
+      phone: phone.trim(),
       message: message.trim() || undefined,
     })
 
@@ -116,6 +118,26 @@ export function RsvpForm() {
             />
           </div>
 
+          {/* Phone field */}
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="phone"
+              className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
+            >
+              <Phone className="h-3.5 w-3.5 text-gold" />
+              Contact Number
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter your phone number"
+              className="min-h-[48px] rounded-lg border border-gold/20 bg-card px-4 py-3 font-sans text-base text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:min-h-0 sm:py-3 sm:text-sm"
+            />
+          </div>
+
           {/* Pax field */}
           <div className="flex flex-col gap-2">
             <label
@@ -188,7 +210,7 @@ export function RsvpForm() {
           {/* Submit button - always full width on mobile */}
           <button
             type="submit"
-            disabled={isSubmitting || !name.trim()}
+            disabled={isSubmitting || !name.trim() || !phone.trim()}
             className="mt-2 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-foreground px-6 py-3.5 font-sans text-[13px] font-medium uppercase tracking-[0.15em] text-background transition-all active:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0 sm:w-auto sm:rounded-md sm:px-8 sm:py-3.5 sm:text-sm sm:tracking-[0.2em] sm:hover:bg-foreground/90"
           >
             {isSubmitting ? (

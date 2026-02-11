@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS public.rsvps (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   guest_name TEXT NOT NULL,
   pax INTEGER NOT NULL DEFAULT 1 CHECK (pax >= 1 AND pax <= 20),
+  phone TEXT NOT NULL,
   message TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -19,3 +20,7 @@ CREATE POLICY "allow_public_insert" ON public.rsvps
 CREATE POLICY "allow_public_select" ON public.rsvps
   FOR SELECT
   USING (true);
+
+-- Ensure phone column exists on existing databases
+ALTER TABLE public.rsvps
+  ADD COLUMN IF NOT EXISTS phone TEXT NOT NULL;
