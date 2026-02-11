@@ -2,6 +2,16 @@
 
 import { useEffect, useState } from "react"
 import { CalendarDays, MapPin, Mail, ChevronUp, PhoneCall } from "lucide-react"
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -90,20 +100,66 @@ export function Navigation() {
               RSVP
             </span>
           </a>
-          <button
-            type="button"
-            onClick={() =>
-              window.alert(
-                "Contact numbers:\n\nHasrat Nazarudin: 0192743665\nNorsiati: 0126170785\nFarhan: 01110152931\nSyafika: 0193737128",
-              )
-            }
-            className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
-          >
-            <PhoneCall className="h-5 w-5" />
-            <span className="font-sans text-[10px] font-medium uppercase tracking-wider">
-              Contact
-            </span>
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button
+                type="button"
+                className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
+              >
+                <PhoneCall className="h-5 w-5" />
+                <span className="font-sans text-[10px] font-medium uppercase tracking-wider">
+                  Contact
+                </span>
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="border-gold/20 bg-card">
+              <AlertDialogHeader className="text-center sm:text-left">
+                <AlertDialogTitle className="font-serif text-2xl font-bold text-foreground">
+                  Contact
+                </AlertDialogTitle>
+                <AlertDialogDescription className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+                  Tap a number to call.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <div className="mt-1 grid gap-3">
+                <a
+                  href="tel:0192743665"
+                  className="flex items-center justify-between rounded-lg border border-gold/20 bg-background/40 px-4 py-3 font-sans text-sm text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <span className="font-medium">Hasrat Nazarudin</span>
+                  <span className="text-muted-foreground">0192743665</span>
+                </a>
+                <a
+                  href="tel:0126170785"
+                  className="flex items-center justify-between rounded-lg border border-gold/20 bg-background/40 px-4 py-3 font-sans text-sm text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <span className="font-medium">Norsiati</span>
+                  <span className="text-muted-foreground">0126170785</span>
+                </a>
+                <a
+                  href="tel:01110152931"
+                  className="flex items-center justify-between rounded-lg border border-gold/20 bg-background/40 px-4 py-3 font-sans text-sm text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <span className="font-medium">Farhan</span>
+                  <span className="text-muted-foreground">01110152931</span>
+                </a>
+                <a
+                  href="tel:0193737128"
+                  className="flex items-center justify-between rounded-lg border border-gold/20 bg-background/40 px-4 py-3 font-sans text-sm text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
+                >
+                  <span className="font-medium">Syafika</span>
+                  <span className="text-muted-foreground">0193737128</span>
+                </a>
+              </div>
+
+              <AlertDialogFooter className="mt-2">
+                <AlertDialogCancel className="border-gold/20 bg-transparent font-sans uppercase tracking-[0.15em] text-foreground hover:bg-gold/10">
+                  Close
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <a
             href="#"
             className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
