@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { CalendarDays, MapPin, Mail, ChevronUp } from "lucide-react"
+import { CalendarDays, MapPin, Mail, ChevronUp, PhoneCall } from "lucide-react"
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -90,6 +90,20 @@ export function Navigation() {
               RSVP
             </span>
           </a>
+          <button
+            type="button"
+            onClick={() =>
+              window.alert(
+                "Contact numbers:\n\nHasrat Nazarudin: 0192743665\nNorsiati: 0126170785\nFarhan: 01110152931\nSyafika: 0193737128",
+              )
+            }
+            className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
+          >
+            <PhoneCall className="h-5 w-5" />
+            <span className="font-sans text-[10px] font-medium uppercase tracking-wider">
+              Contact
+            </span>
+          </button>
           <a
             href="#"
             className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
