@@ -248,7 +248,8 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
   const pauseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const USER_SCROLL_PAUSE_MS = 1000
-  const AUTO_SCROLL_DURATION_MS = 12000
+  /** Scroll speed in pixels per second — same speed regardless of message count */
+  const SCROLL_SPEED_PX_PER_SEC = 28
 
   const pauseAutoScroll = useCallback(() => {
     autoScrollPaused.current = true
@@ -261,59 +262,45 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
   }, [])
 
   useEffect(() => {
-    const el = containerRef.current
-    if (!el || messages.length <= 2) return
+    if (messages.length === 0) return
 
-    let rafId = 0
+    const TICK_MS = 50
+    const pxPerTick = (SCROLL_SPEED_PX_PER_SEC * TICK_MS) / 1000
 
-    const getMaxScroll = () => el.scrollHeight - el.clientHeight
+    const intervalId = setInterval(() => {
+      const el = containerRef.current
+      if (!el || autoScrollPaused.current) return
 
-    // Use timestamp-based delta so speed stays consistent even if FPS drops
-    let lastTs: number | null = null
+      const maxScroll = el.scrollHeight - el.clientHeight
+      if (maxScroll <= 0) return
 
-    function tick(ts: number) {
-      if (!el) return
-
-      if (lastTs == null) lastTs = ts
-      const dt = ts - lastTs
-      lastTs = ts
-
-      if (!autoScrollPaused.current) {
-        const maxScroll = getMaxScroll()
-        if (maxScroll <= 0) {
-          rafId = requestAnimationFrame(tick)
-          return
-        }
-        const pxPerMs = maxScroll / AUTO_SCROLL_DURATION_MS
-        el.scrollTop += pxPerMs * dt
-
-        if (el.scrollTop >= maxScroll) {
-          el.scrollTop = 0
-        }
+      el.scrollTop += pxPerTick
+      if (el.scrollTop >= maxScroll) {
+        el.scrollTop = 0
       }
+    }, TICK_MS)
 
-      rafId = requestAnimationFrame(tick)
-    }
-
-    rafId = requestAnimationFrame(tick)
-
+    const el = containerRef.current
     const onWheel = () => pauseAutoScroll()
     const onTouchStart = () => pauseAutoScroll()
-
-    el.addEventListener("wheel", onWheel, { passive: true })
-    el.addEventListener("touchstart", onTouchStart, { passive: true })
+    if (el) {
+      el.addEventListener("wheel", onWheel, { passive: true })
+      el.addEventListener("touchstart", onTouchStart, { passive: true })
+    }
 
     return () => {
-      cancelAnimationFrame(rafId)
-      el.removeEventListener("wheel", onWheel)
-      el.removeEventListener("touchstart", onTouchStart)
+      clearInterval(intervalId)
+      if (el) {
+        el.removeEventListener("wheel", onWheel)
+        el.removeEventListener("touchstart", onTouchStart)
+      }
       if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
     }
   }, [messages.length, pauseAutoScroll])
 
   if (messages.length === 0) return null
 
-  const scrollable = messages.length > 2
+  const scrollable = messages.length >= 2
 
   const messageEl = (m: RsvpMessage, index: number) => (
     <div
