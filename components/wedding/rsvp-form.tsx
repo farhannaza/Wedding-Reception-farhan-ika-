@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import { submitRsvp, getRsvpMessages, type RsvpMessage } from "@/app/actions/rsvp"
 import { CheckCircle2, Loader2, Users, User, MessageSquare, Phone } from "lucide-react"
 import { Reveal } from "@/components/reveal"
@@ -235,13 +235,67 @@ export function RsvpForm() {
 }
 
 function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const autoScrollPaused = useRef(false)
+  const pauseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const AUTO_SCROLL_DURATION_MS = 12_000 // full cycle (faster than before)
+  const USER_SCROLL_PAUSE_MS = 3000
+
+  const pauseAutoScroll = useCallback(() => {
+    autoScrollPaused.current = true
+    if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
+    pauseTimeout.current = setTimeout(() => {
+      autoScrollPaused.current = false
+      pauseTimeout.current = null
+    }, USER_SCROLL_PAUSE_MS)
+  }, [])
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el || messages.length <= 2) return
+
+    let start: number | null = null
+    const totalScroll = () => el.scrollHeight / 2
+
+    function tick(timestamp: number) {
+      if (!el) return
+      if (autoScrollPaused.current) {
+        requestAnimationFrame(tick)
+        return
+      }
+      const total = totalScroll()
+      if (start == null) start = timestamp - (el.scrollTop / total) * AUTO_SCROLL_DURATION_MS
+      const elapsed = timestamp - start
+      const progress = elapsed / AUTO_SCROLL_DURATION_MS
+      if (progress >= 1) {
+        el.scrollTop = 0
+        start = timestamp
+      } else {
+        el.scrollTop = progress * total
+      }
+      requestAnimationFrame(tick)
+    }
+    const id = requestAnimationFrame(tick)
+
+    const onWheel = () => pauseAutoScroll()
+    const onTouchStart = () => pauseAutoScroll()
+    el.addEventListener("wheel", onWheel, { passive: true })
+    el.addEventListener("touchstart", onTouchStart, { passive: true })
+    return () => {
+      cancelAnimationFrame(id)
+      el.removeEventListener("wheel", onWheel)
+      el.removeEventListener("touchstart", onTouchStart)
+      if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
+    }
+  }, [messages.length, pauseAutoScroll])
+
   if (messages.length === 0) return null
 
   const scrollable = messages.length > 2
-  const content = messages.map((m) => (
+  const messageEl = (m: RsvpMessage) => (
     <div
       key={m.id}
-      className="rounded-lg border border-gold/20 bg-card px-4 py-3 text-left shadow-sm"
+      className="shrink-0 rounded-lg border border-gold/20 bg-card px-4 py-3 text-left shadow-sm"
     >
       <p className="font-sans text-[13px] font-medium text-foreground sm:text-sm">
         — {m.guest_name}
@@ -250,7 +304,7 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
         {m.message}
       </p>
     </div>
-  ))
+  )
 
   return (
     <div className="mt-14 sm:mt-16">
@@ -259,14 +313,18 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
           Messages from guests
         </p>
       </Reveal>
-      <div className="relative h-48 overflow-hidden sm:h-56">
+      <div
+        ref={containerRef}
+        className="flex max-h-48 flex-col gap-3 overflow-y-auto overflow-x-hidden sm:max-h-56"
+        style={scrollable ? { scrollBehavior: "auto" } : undefined}
+      >
         {scrollable ? (
-          <div className="animate-rsvp-messages-scroll flex flex-col gap-3">
-            {content}
-            {content}
-          </div>
+          <>
+            {messages.map(messageEl)}
+            {messages.map(messageEl)}
+          </>
         ) : (
-          <div className="flex flex-col gap-3">{content}</div>
+          messages.map(messageEl)
         )}
       </div>
     </div>

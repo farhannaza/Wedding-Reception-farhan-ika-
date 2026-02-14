@@ -111,16 +111,4 @@ html {
   animation-delay: 600ms;
 }
 
-/* RSVP messages auto-scroll */
-@keyframes rsvp-messages-scroll {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
-}
-
-.animate-rsvp-messages-scroll {
-  animation: rsvp-messages-scroll 40s linear infinite;
-}
+/* RSVP messages - scroll controlled by JS for user + auto scroll */
