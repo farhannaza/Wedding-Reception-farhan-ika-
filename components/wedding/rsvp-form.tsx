@@ -19,6 +19,12 @@ export function RsvpForm() {
     getRsvpMessages().then(setMessages)
   }, [])
 
+  useEffect(() => {
+    if (isSubmitted) {
+      document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  }, [isSubmitted])
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setIsSubmitting(true)
