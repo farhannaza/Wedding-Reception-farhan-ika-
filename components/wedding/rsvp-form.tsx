@@ -249,7 +249,7 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
 
   const USER_SCROLL_PAUSE_MS = 1000
   /** Scroll speed in pixels per second — same speed regardless of message count */
-  const SCROLL_SPEED_PX_PER_SEC = 60
+  const SCROLL_SPEED_PX_PER_SEC = 100
 
   const pauseAutoScroll = useCallback(() => {
     autoScrollPaused.current = true
