@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Wedding Reception | Farhan & Syafika',
+  title: 'Farhan & Syafika',
   description: 'You are cordially invited to celebrate the wedding reception of Farhan & Syafika. RSVP and find venue details here.',
 }
 
