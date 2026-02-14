@@ -50,12 +50,10 @@ export function RsvpForm() {
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gold/10">
                 <CheckCircle2 className="h-8 w-8 text-gold" />
               </div>
-              <h3 className="font-serif text-2xl font-bold text-foreground">
-                Thank You!
-              </h3>
+              <h3 className="font-serif text-2xl font-bold text-foreground">Thank You!</h3>
               <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
-                Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been
-                received. We look forward to celebrating with you!
+                Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been received.
+                We look forward to celebrating with you!
               </p>
               <div className="flex items-center gap-3">
                 <div className="h-px w-8 bg-gold/30" />
@@ -67,6 +65,7 @@ export function RsvpForm() {
             </div>
           </Reveal>
         </div>
+
         <RsvpMessagesList messages={messages} />
       </section>
     )
@@ -192,8 +191,10 @@ export function RsvpForm() {
               className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
             >
               <MessageSquare className="h-3.5 w-3.5 text-gold" />
-              Message
-              <span className="font-normal normal-case tracking-normal text-muted-foreground">(optional)</span>
+              Message{" "}
+              <span className="font-normal normal-case tracking-normal text-muted-foreground">
+                (optional)
+              </span>
             </label>
             <textarea
               id="message"
@@ -212,7 +213,7 @@ export function RsvpForm() {
             </p>
           )}
 
-          {/* Submit button - always full width on mobile */}
+          {/* Submit button */}
           <button
             type="submit"
             disabled={isSubmitting || !name.trim() || !phone.trim()}
@@ -228,6 +229,7 @@ export function RsvpForm() {
             )}
           </button>
         </form>
+
         <RsvpMessagesList messages={messages} />
       </div>
     </section>
@@ -238,11 +240,13 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const autoScrollPaused = useRef(false)
   const pauseTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const AUTO_SCROLL_DURATION_MS = 12_000 // full cycle (faster than before)
-  const USER_SCROLL_PAUSE_MS = 3000
+
+  const USER_SCROLL_PAUSE_MS = 1000
+  const AUTO_SCROLL_DURATION_MS = 12000
 
   const pauseAutoScroll = useCallback(() => {
     autoScrollPaused.current = true
+
     if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
     pauseTimeout.current = setTimeout(() => {
       autoScrollPaused.current = false
@@ -254,35 +258,43 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
     const el = containerRef.current
     if (!el || messages.length <= 2) return
 
-    let start: number | null = null
+    let rafId = 0
+
     const totalScroll = () => el.scrollHeight / 2
 
-    function tick(timestamp: number) {
+    // Use timestamp-based delta so speed stays consistent even if FPS drops
+    let lastTs: number | null = null
+
+    function tick(ts: number) {
       if (!el) return
-      if (autoScrollPaused.current) {
-        requestAnimationFrame(tick)
-        return
+
+      if (lastTs == null) lastTs = ts
+      const dt = ts - lastTs
+      lastTs = ts
+
+      if (!autoScrollPaused.current) {
+        const total = totalScroll()
+        const pxPerMs = total / AUTO_SCROLL_DURATION_MS
+        el.scrollTop += pxPerMs * dt
+
+        if (el.scrollTop >= total) {
+          el.scrollTop = 0
+        }
       }
-      const total = totalScroll()
-      if (start == null) start = timestamp - (el.scrollTop / total) * AUTO_SCROLL_DURATION_MS
-      const elapsed = timestamp - start
-      const progress = elapsed / AUTO_SCROLL_DURATION_MS
-      if (progress >= 1) {
-        el.scrollTop = 0
-        start = timestamp
-      } else {
-        el.scrollTop = progress * total
-      }
-      requestAnimationFrame(tick)
+
+      rafId = requestAnimationFrame(tick)
     }
-    const id = requestAnimationFrame(tick)
+
+    rafId = requestAnimationFrame(tick)
 
     const onWheel = () => pauseAutoScroll()
     const onTouchStart = () => pauseAutoScroll()
+
     el.addEventListener("wheel", onWheel, { passive: true })
     el.addEventListener("touchstart", onTouchStart, { passive: true })
+
     return () => {
-      cancelAnimationFrame(id)
+      cancelAnimationFrame(rafId)
       el.removeEventListener("wheel", onWheel)
       el.removeEventListener("touchstart", onTouchStart)
       if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
@@ -292,14 +304,13 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
   if (messages.length === 0) return null
 
   const scrollable = messages.length > 2
-  const messageEl = (m: RsvpMessage) => (
+
+  const messageEl = (m: RsvpMessage, index: number) => (
     <div
-      key={m.id}
+      key={`${m.id}-${index}`}
       className="shrink-0 rounded-lg border border-gold/20 bg-card px-4 py-3 text-left shadow-sm"
     >
-      <p className="font-sans text-[13px] font-medium text-foreground sm:text-sm">
-        — {m.guest_name}
-      </p>
+      <p className="font-sans text-[13px] font-medium text-foreground sm:text-sm">— {m.guest_name}</p>
       <p className="mt-1 font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
         {m.message}
       </p>
@@ -313,18 +324,18 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
           Messages from guests
         </p>
       </Reveal>
+
       <div
         ref={containerRef}
-        className="flex max-h-48 flex-col gap-3 overflow-y-auto overflow-x-hidden sm:max-h-56"
-        style={scrollable ? { scrollBehavior: "auto" } : undefined}
+        className="flex max-h-80 flex-col gap-3 overflow-y-auto overflow-x-hidden sm:max-h-96"
       >
         {scrollable ? (
           <>
-            {messages.map(messageEl)}
-            {messages.map(messageEl)}
+            {messages.map((m, i) => messageEl(m, i))}
+            {messages.map((m, i) => messageEl(m, i + messages.length))}
           </>
         ) : (
-          messages.map(messageEl)
+          messages.map((m, i) => messageEl(m, i))
         )}
       </div>
     </div>
