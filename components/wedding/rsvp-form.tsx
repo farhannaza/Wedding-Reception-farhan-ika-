@@ -1,9 +1,7 @@
 "use client"
 
-import React from "react"
-
-import { useState } from "react"
-import { submitRsvp } from "@/app/actions/rsvp"
+import React, { useState, useEffect } from "react"
+import { submitRsvp, getRsvpMessages, type RsvpMessage } from "@/app/actions/rsvp"
 import { CheckCircle2, Loader2, Users, User, MessageSquare, Phone } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 
@@ -15,6 +13,11 @@ export function RsvpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [messages, setMessages] = useState<RsvpMessage[]>([])
+
+  useEffect(() => {
+    getRsvpMessages().then(setMessages)
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,6 +35,7 @@ export function RsvpForm() {
 
     if (result.success) {
       setIsSubmitted(true)
+      getRsvpMessages().then(setMessages)
     } else {
       setError(result.error || "Something went wrong. Please try again.")
     }
@@ -63,6 +67,7 @@ export function RsvpForm() {
             </div>
           </Reveal>
         </div>
+        <RsvpMessagesList messages={messages} />
       </section>
     )
   }
@@ -223,7 +228,47 @@ export function RsvpForm() {
             )}
           </button>
         </form>
+        <RsvpMessagesList messages={messages} />
       </div>
     </section>
+  )
+}
+
+function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
+  if (messages.length === 0) return null
+
+  const scrollable = messages.length > 2
+  const content = messages.map((m) => (
+    <div
+      key={m.id}
+      className="rounded-lg border border-gold/20 bg-card px-4 py-3 text-left shadow-sm"
+    >
+      <p className="font-sans text-[13px] font-medium text-foreground sm:text-sm">
+        — {m.guest_name}
+      </p>
+      <p className="mt-1 font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+        {m.message}
+      </p>
+    </div>
+  ))
+
+  return (
+    <div className="mt-14 sm:mt-16">
+      <Reveal>
+        <p className="mb-4 text-center font-sans text-[11px] font-light uppercase tracking-[0.2em] text-gold sm:text-xs sm:tracking-[0.3em]">
+          Messages from guests
+        </p>
+      </Reveal>
+      <div className="relative h-48 overflow-hidden sm:h-56">
+        {scrollable ? (
+          <div className="animate-rsvp-messages-scroll flex flex-col gap-3">
+            {content}
+            {content}
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">{content}</div>
+        )}
+      </div>
+    </div>
   )
 }
