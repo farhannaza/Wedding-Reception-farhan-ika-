@@ -266,7 +266,7 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
 
     let rafId = 0
 
-    const totalScroll = () => el.scrollHeight / 2
+    const getMaxScroll = () => el.scrollHeight - el.clientHeight
 
     // Use timestamp-based delta so speed stays consistent even if FPS drops
     let lastTs: number | null = null
@@ -279,11 +279,15 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
       lastTs = ts
 
       if (!autoScrollPaused.current) {
-        const total = totalScroll()
-        const pxPerMs = total / AUTO_SCROLL_DURATION_MS
+        const maxScroll = getMaxScroll()
+        if (maxScroll <= 0) {
+          rafId = requestAnimationFrame(tick)
+          return
+        }
+        const pxPerMs = maxScroll / AUTO_SCROLL_DURATION_MS
         el.scrollTop += pxPerMs * dt
 
-        if (el.scrollTop >= total) {
+        if (el.scrollTop >= maxScroll) {
           el.scrollTop = 0
         }
       }
