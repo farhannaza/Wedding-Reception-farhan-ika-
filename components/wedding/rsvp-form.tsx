@@ -249,7 +249,7 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
 
   const USER_SCROLL_PAUSE_MS = 1000
   /** Scroll speed in pixels per second — same speed regardless of message count */
-  const SCROLL_SPEED_PX_PER_SEC = 28
+  const SCROLL_SPEED_PX_PER_SEC = 60
 
   const pauseAutoScroll = useCallback(() => {
     autoScrollPaused.current = true
@@ -263,33 +263,50 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
 
   useEffect(() => {
     if (messages.length === 0) return
-
-    const TICK_MS = 50
-    const pxPerTick = (SCROLL_SPEED_PX_PER_SEC * TICK_MS) / 1000
-
-    const intervalId = setInterval(() => {
+  
+    let rafId = 0
+    let lastTime = 0
+  
+    function tick(now: number) {
+      rafId = requestAnimationFrame(tick)
       const el = containerRef.current
-      if (!el || autoScrollPaused.current) return
-
+      if (!el) return
+  
+      // 🔴 IMPORTANT: reset time when paused
+      if (autoScrollPaused.current) {
+        lastTime = now
+        return
+      }
+  
       const maxScroll = el.scrollHeight - el.clientHeight
       if (maxScroll <= 0) return
-
-      el.scrollTop += pxPerTick
-      if (el.scrollTop >= maxScroll) {
-        el.scrollTop = 0
+  
+      const dt = lastTime ? now - lastTime : 0
+      lastTime = now
+  
+      if (dt > 0) {
+        el.scrollTop += (SCROLL_SPEED_PX_PER_SEC * dt) / 1000
+  
+        // Loop cleanly without overshoot
+        if (el.scrollTop >= maxScroll) {
+          el.scrollTop -= maxScroll
+        }
       }
-    }, TICK_MS)
-
+    }
+  
+    rafId = requestAnimationFrame(tick)
+  
     const el = containerRef.current
     const onWheel = () => pauseAutoScroll()
     const onTouchStart = () => pauseAutoScroll()
+  
     if (el) {
       el.addEventListener("wheel", onWheel, { passive: true })
       el.addEventListener("touchstart", onTouchStart, { passive: true })
     }
-
+  
     return () => {
-      clearInterval(intervalId)
+      cancelAnimationFrame(rafId)
       if (el) {
         el.removeEventListener("wheel", onWheel)
         el.removeEventListener("touchstart", onTouchStart)
@@ -297,6 +314,7 @@ function RsvpMessagesList({ messages }: { messages: RsvpMessage[] }) {
       if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
     }
   }, [messages.length, pauseAutoScroll])
+  
 
   if (messages.length === 0) return null
 
