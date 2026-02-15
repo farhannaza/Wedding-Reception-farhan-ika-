@@ -2,6 +2,18 @@ import React from "react"
 import { CalendarDays, Clock, MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 
+const eventTitle = "Majlis Kesyukuran Perkahwinan Farhan & Syafika"
+const eventLocation = "British Vogue By Kamalinda, Ecohill Semenyih"
+const eventDescription =
+  "Ahad, 18 Oktober 2026 | 11:00 AM - 4:00 PM. Kami berbesar hati menjemput anda ke majlis kami."
+
+const googleCalendarUrl =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  `&text=${encodeURIComponent(eventTitle)}` +
+  "&dates=20261018T030000Z/20261018T080000Z" +
+  `&details=${encodeURIComponent(eventDescription)}` +
+  `&location=${encodeURIComponent(eventLocation)}`
+
 function DetailCard({
   icon,
   title,
@@ -108,6 +120,43 @@ export function DetailsSection() {
             title="Lokasi"
             lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
           />
+        </Reveal>
+      </div>
+
+      <div className="mx-auto mt-10 max-w-4xl sm:mt-14">
+        <Reveal direction="up" delay={300}>
+          <div className="rounded-xl border border-gold/20 bg-card p-5 text-center sm:p-6">
+            <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-gold sm:text-xs">
+              Add To Calendar
+            </p>
+            <p className="mt-2 font-sans text-[13px] text-foreground/70 sm:text-sm">
+              Save the date and time to your preferred calendar app.
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <a
+                href={googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
+              >
+                Google Calendar
+              </a>
+              <a
+                href="/calendar/farhan-syafika.ics"
+                download
+                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
+              >
+                Apple Calendar
+              </a>
+              <a
+                href="/calendar/farhan-syafika.ics"
+                download
+                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
+              >
+                Android Calendar
+              </a>
+            </div>
+          </div>
         </Reveal>
       </div>
 

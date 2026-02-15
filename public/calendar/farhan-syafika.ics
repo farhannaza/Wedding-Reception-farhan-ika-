@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Farhan & Syafika Wedding//Reception Invite//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:farhan-syafika-wedding-20261018@farhan-syafika
+DTSTAMP:20260215T000000Z
+DTSTART:20261018T030000Z
+DTEND:20261018T080000Z
+SUMMARY:Majlis Kesyukuran Perkahwinan Farhan & Syafika
+DESCRIPTION:Ahad, 18 Oktober 2026 | 11:00 AM - 4:00 PM. Kami berbesar hati menjemput anda ke majlis kami.
+LOCATION:British Vogue By Kamalinda, Ecohill Semenyih
+END:VEVENT
+END:VCALENDAR
