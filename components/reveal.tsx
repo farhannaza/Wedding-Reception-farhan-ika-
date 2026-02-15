@@ -8,23 +8,43 @@ type RevealProps = {
   delay?: number
 }
 
+function oppositeDirection(direction: "up" | "down" | "left" | "right") {
+  return (
+    {
+      up: "down",
+      down: "up",
+      left: "right",
+      right: "left",
+    } as const
+  )[direction]
+}
+
 export function Reveal({
   children,
   direction = "up",
   delay = 0,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [hasEntered, setHasEntered] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [activeDirection, setActiveDirection] = useState(direction)
+  const lastScrollYRef = useRef(0)
 
   useEffect(() => {
+    lastScrollYRef.current = window.scrollY
     const node = ref.current
     if (!node) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        const currentScrollY = window.scrollY
+        const isScrollingUp = currentScrollY < lastScrollYRef.current
+        lastScrollYRef.current = currentScrollY
+
         if (entry.isIntersecting) {
-          setHasEntered(true)
-          observer.unobserve(entry.target)
+          setActiveDirection(isScrollingUp ? oppositeDirection(direction) : direction)
+          setIsVisible(true)
+        } else {
+          setIsVisible(false)
         }
       },
       {
@@ -42,19 +62,19 @@ export function Reveal({
     down: { x: 0, y: -44 },
     left: { x: 44, y: 0 },
     right: { x: -44, y: 0 },
-  }[direction]
+  }[activeDirection]
 
   const style = {
     "--reveal-x": `${offset.x}px`,
     "--reveal-y": `${offset.y}px`,
-    animationDelay: hasEntered && delay ? `${delay}ms` : undefined,
+    animationDelay: isVisible && delay ? `${delay}ms` : undefined,
   } as CSSProperties
 
   return (
     <div
       ref={ref}
       style={style}
-      className={`reveal-dramatic-base ${hasEntered ? "reveal-dramatic-enter" : "reveal-dramatic-hidden"}`}
+      className={`reveal-dramatic-base ${isVisible ? "reveal-dramatic-enter" : "reveal-dramatic-hidden"}`}
     >
       {children}
     </div>
