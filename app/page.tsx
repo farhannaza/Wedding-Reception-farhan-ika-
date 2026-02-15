@@ -5,12 +5,12 @@ import { VenueMap } from "@/components/wedding/venue-map"
 import { RsvpForm } from "@/components/wedding/rsvp-form"
 import { Footer } from "@/components/wedding/footer"
 import { Navigation } from "@/components/wedding/navigation"
-import { AutoScrollToggle } from "@/components/wedding/auto-scroll-toggle"
+import { AutoScrollController } from "@/components/wedding/auto-scroll-controller"
 
 export default function Page() {
   return (
     <main>
-      <AutoScrollToggle />
+      <AutoScrollController />
       <Navigation />
       <HeroSection />
       <DetailsSection />

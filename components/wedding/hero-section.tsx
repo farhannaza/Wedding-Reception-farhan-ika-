@@ -1,7 +1,16 @@
+"use client"
+
+import type { MouseEvent } from "react"
 import Image from "next/image"
 import { Reveal } from "@/components/reveal"
 
 export function HeroSection() {
+  const handleScrollStart = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    window.dispatchEvent(new Event("wedding:start-autoscroll"))
+    document.getElementById("details")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   return (
     <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-20 text-center">
       {/* Background image */}
@@ -89,6 +98,7 @@ export function HeroSection() {
           <div className="mt-8 sm:mt-10 md:mt-12">
             <a
               href="#details"
+              onClick={handleScrollStart}
               className="group flex flex-col items-center gap-2 text-gold/60 transition-colors active:text-gold"
               aria-label="Scroll to details"
             >
