@@ -5,7 +5,8 @@ import { createClient } from "@/lib/supabase/server"
 export async function submitRsvp(formData: {
   guest_name: string
   pax: number
-  phone: string
+  phone?: string
+  attendance_status: "attend" | "not_attending"
   message?: string
 }) {
   const supabase = await createClient()
@@ -15,7 +16,8 @@ export async function submitRsvp(formData: {
     .insert({
       guest_name: formData.guest_name,
       pax: formData.pax,
-      phone: formData.phone,
+      phone: formData.phone ?? null,
+      attendance_status: formData.attendance_status,
       message: formData.message || null,
     })
     .select()

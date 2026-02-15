@@ -6,6 +6,7 @@ import { CheckCircle2, Loader2, Users, User, MessageSquare, Phone } from "lucide
 import { Reveal } from "@/components/reveal"
 
 export function RsvpForm() {
+  const [attendance, setAttendance] = useState<"attend" | "not_attending" | null>(null)
   const [name, setName] = useState("")
   const [pax, setPax] = useState(1)
   const [phone, setPhone] = useState("")
@@ -27,13 +28,17 @@ export function RsvpForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!attendance) return
+
+    const isAttending = attendance === "attend"
     setIsSubmitting(true)
     setError(null)
 
     const result = await submitRsvp({
       guest_name: name.trim(),
-      pax,
-      phone: phone.trim(),
+      pax: isAttending ? pax : 1,
+      phone: isAttending ? phone.trim() : undefined,
+      attendance_status: attendance,
       message: message.trim() || undefined,
     })
 
@@ -57,10 +62,16 @@ export function RsvpForm() {
                 <CheckCircle2 className="h-8 w-8 text-gold" />
               </div>
               <h3 className="font-serif text-2xl font-bold text-foreground">Thank You!</h3>
-              <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
-                Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been received.
-                We look forward to celebrating with you!
-              </p>
+              {attendance === "attend" ? (
+                <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+                  Dear {name}, your RSVP for {pax} {pax === 1 ? "guest" : "guests"} has been received.
+                  We look forward to celebrating with you!
+                </p>
+              ) : (
+                <p className="font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+                  Dear {name}, thank you for your response. We appreciate you letting us know.
+                </p>
+              )}
               <div className="flex items-center gap-3">
                 <div className="h-px w-8 bg-gold/30" />
                 <svg className="h-3 w-3 text-gold/50" viewBox="0 0 24 24" fill="currentColor">
@@ -106,8 +117,34 @@ export function RsvpForm() {
           </Reveal>
         </div>
 
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => setAttendance("attend")}
+            className={`min-h-[48px] rounded-lg border px-4 py-3 font-sans text-[12px] font-medium uppercase tracking-[0.15em] transition-colors sm:text-xs ${
+              attendance === "attend"
+                ? "border-gold bg-gold/10 text-foreground"
+                : "border-gold/20 bg-card text-foreground/80 active:border-gold/50 active:bg-gold/10 sm:hover:border-gold/50 sm:hover:bg-gold/10"
+            }`}
+          >
+            Attend
+          </button>
+          <button
+            type="button"
+            onClick={() => setAttendance("not_attending")}
+            className={`min-h-[48px] rounded-lg border px-4 py-3 font-sans text-[12px] font-medium uppercase tracking-[0.15em] transition-colors sm:text-xs ${
+              attendance === "not_attending"
+                ? "border-gold bg-gold/10 text-foreground"
+                : "border-gold/20 bg-card text-foreground/80 active:border-gold/50 active:bg-gold/10 sm:hover:border-gold/50 sm:hover:bg-gold/10"
+            }`}
+          >
+            Not Attending
+          </button>
+        </div>
+
         {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-6 sm:mt-12">
+        {attendance && (
+          <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-6 sm:mt-12">
           {/* Name field */}
           <div className="flex flex-col gap-2">
             <label
@@ -128,67 +165,71 @@ export function RsvpForm() {
             />
           </div>
 
-          {/* Phone field */}
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="phone"
-              className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
-            >
-              <Phone className="h-3.5 w-3.5 text-gold" />
-              Contact Number
-            </label>
-            <input
-              id="phone"
-              type="tel"
-              required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="Enter your phone number"
-              className="min-h-[48px] rounded-lg border border-gold/20 bg-card px-4 py-3 font-sans text-base text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:min-h-0 sm:py-3 sm:text-sm"
-            />
-          </div>
+          {attendance === "attend" && (
+            <>
+              {/* Phone field */}
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="phone"
+                  className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
+                >
+                  <Phone className="h-3.5 w-3.5 text-gold" />
+                  Contact Number
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Enter your phone number"
+                  className="min-h-[48px] rounded-lg border border-gold/20 bg-card px-4 py-3 font-sans text-base text-foreground placeholder:text-muted-foreground/50 transition-colors focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:min-h-0 sm:py-3 sm:text-sm"
+                />
+              </div>
 
-          {/* Pax field */}
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="pax"
-              className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
-            >
-              <Users className="h-3.5 w-3.5 text-gold" />
-              Number of Guests
-            </label>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setPax(Math.max(1, pax - 1))}
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-gold/20 bg-card font-sans text-xl text-foreground transition-colors active:border-gold/50 active:bg-gold/10 sm:h-10 sm:w-10 sm:text-lg sm:hover:border-gold/50 sm:hover:bg-gold/10"
-                aria-label="Decrease guests"
-              >
-                -
-              </button>
-              <input
-                id="pax"
-                type="number"
-                min={1}
-                max={2}
-                required
-                value={pax}
-                onChange={(e) => setPax(Math.max(1, Math.min(2, parseInt(e.target.value) || 1)))}
-                className="h-12 w-20 rounded-lg border border-gold/20 bg-card px-4 text-center font-sans text-base text-foreground focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:h-10 sm:text-sm"
-              />
-              <button
-                type="button"
-                onClick={() => setPax(Math.min(2, pax + 1))}
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-gold/20 bg-card font-sans text-xl text-foreground transition-colors active:border-gold/50 active:bg-gold/10 sm:h-10 sm:w-10 sm:text-lg sm:hover:border-gold/50 sm:hover:bg-gold/10"
-                aria-label="Increase guests"
-              >
-                +
-              </button>
-              <span className="font-sans text-[13px] text-muted-foreground">
-                {pax === 1 ? "person" : "people"}
-              </span>
-            </div>
-          </div>
+              {/* Pax field */}
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="pax"
+                  className="flex items-center gap-2 font-sans text-[11px] font-medium uppercase tracking-[0.15em] text-foreground sm:text-xs"
+                >
+                  <Users className="h-3.5 w-3.5 text-gold" />
+                  Number of Guests
+                </label>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPax(Math.max(1, pax - 1))}
+                    className="flex h-12 w-12 items-center justify-center rounded-lg border border-gold/20 bg-card font-sans text-xl text-foreground transition-colors active:border-gold/50 active:bg-gold/10 sm:h-10 sm:w-10 sm:text-lg sm:hover:border-gold/50 sm:hover:bg-gold/10"
+                    aria-label="Decrease guests"
+                  >
+                    -
+                  </button>
+                  <input
+                    id="pax"
+                    type="number"
+                    min={1}
+                    max={2}
+                    required
+                    value={pax}
+                    onChange={(e) => setPax(Math.max(1, Math.min(2, parseInt(e.target.value) || 1)))}
+                    className="h-12 w-20 rounded-lg border border-gold/20 bg-card px-4 text-center font-sans text-base text-foreground focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:h-10 sm:text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPax(Math.min(2, pax + 1))}
+                    className="flex h-12 w-12 items-center justify-center rounded-lg border border-gold/20 bg-card font-sans text-xl text-foreground transition-colors active:border-gold/50 active:bg-gold/10 sm:h-10 sm:w-10 sm:text-lg sm:hover:border-gold/50 sm:hover:bg-gold/10"
+                    aria-label="Increase guests"
+                  >
+                    +
+                  </button>
+                  <span className="font-sans text-[13px] text-muted-foreground">
+                    {pax === 1 ? "person" : "people"}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Message field */}
           <div className="flex flex-col gap-2">
@@ -220,21 +261,24 @@ export function RsvpForm() {
           )}
 
           {/* Submit button */}
-          <button
-            type="submit"
-            disabled={isSubmitting || !name.trim() || !phone.trim()}
-            className="mt-2 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-foreground px-6 py-3.5 font-sans text-[13px] font-medium uppercase tracking-[0.15em] text-background transition-all active:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0 sm:w-auto sm:rounded-md sm:px-8 sm:py-3.5 sm:text-sm sm:tracking-[0.2em] sm:hover:bg-foreground/90"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              "Confirm Attendance"
-            )}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={isSubmitting || !name.trim() || (attendance === "attend" && !phone.trim())}
+              className="mt-2 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-foreground px-6 py-3.5 font-sans text-[13px] font-medium uppercase tracking-[0.15em] text-background transition-all active:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-0 sm:w-auto sm:rounded-md sm:px-8 sm:py-3.5 sm:text-sm sm:tracking-[0.2em] sm:hover:bg-foreground/90"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : attendance === "attend" ? (
+                "Confirm Attendance"
+              ) : (
+                "Send Response"
+              )}
+            </button>
+          </form>
+        )}
 
         <RsvpMessagesList messages={messages} />
       </div>
