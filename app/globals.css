@@ -147,3 +147,110 @@ html {
     animation: none;
   }
 }
+
+/* Intro gate (blur + opening card) */
+.intro-gate {
+  isolation: isolate;
+}
+
+.intro-gate-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.26));
+  backdrop-filter: blur(8px) saturate(0.85);
+  -webkit-backdrop-filter: blur(8px) saturate(0.85);
+}
+
+.intro-gate-left,
+.intro-gate-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: rgba(246, 244, 239, 0.76);
+  transition: transform 900ms cubic-bezier(0.2, 1, 0.22, 1), opacity 900ms ease;
+}
+
+.intro-gate-left {
+  left: 0;
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.intro-gate-right {
+  right: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.intro-gate-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-0.5px);
+  background: rgba(0, 0, 0, 0.12);
+  transition: opacity 420ms ease;
+}
+
+.intro-gate-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 160px;
+  height: 160px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(249, 247, 243, 0.86);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
+  color: rgba(30, 30, 30, 0.8);
+  transition: transform 900ms cubic-bezier(0.2, 1, 0.22, 1), opacity 900ms ease;
+}
+
+.intro-gate-script {
+  font-family: var(--font-playfair), serif;
+  font-size: 30px;
+  line-height: 1;
+  font-style: italic;
+}
+
+.intro-gate-amp {
+  margin: 4px 0;
+  font-family: var(--font-playfair), serif;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.intro-gate-open {
+  margin-top: 10px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.intro-gate-opening .intro-gate-left {
+  transform: translateX(-102%);
+  opacity: 0;
+}
+
+.intro-gate-opening .intro-gate-right {
+  transform: translateX(102%);
+  opacity: 0;
+}
+
+.intro-gate-opening .intro-gate-line {
+  opacity: 0;
+}
+
+.intro-gate-opening .intro-gate-button {
+  transform: translate(-50%, -50%) scale(0.86);
+  opacity: 0;
+}
