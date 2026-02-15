@@ -1,7 +1,7 @@
  "use client"
 
 import React from "react"
-import { CalendarDays, Clock, MapPin, Apple, Bot } from "lucide-react"
+import { CalendarDays, Clock, MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import {
   Dialog,
@@ -165,7 +165,7 @@ export function DetailsSection() {
                 >
                   <span className="sr-only">Google Calendar</span>
                   <img
-                    src="/images/google-maps-logo.svg"
+                    src="/images/Google_Calendar_icon_(2020).svg"
                     alt="Google"
                     className="h-7 w-7"
                   />
@@ -176,7 +176,11 @@ export function DetailsSection() {
                   className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Apple Calendar</span>
-                  <Apple className="h-7 w-7" />
+                  <img
+                    src="/images/Apple_logo_black.svg"
+                    alt="Apple"
+                    className="h-7 w-7 object-contain"
+                  />
                 </a>
                 <a
                   href="/calendar/farhan-syafika.ics"
@@ -184,7 +188,11 @@ export function DetailsSection() {
                   className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Android Calendar</span>
-                  <Bot className="h-7 w-7" />
+                  <img
+                    src="/images/android.svg"
+                    alt="Android"
+                    className="h-7 w-7 object-contain"
+                  />
                 </a>
               </div>
             </DialogContent>
