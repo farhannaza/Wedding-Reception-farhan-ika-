@@ -19,7 +19,7 @@ export function AutoScrollToggle() {
   useEffect(() => {
     if (!isRunning || prefersReducedMotion) return
 
-    const SPEED_PX_PER_SEC = 35
+    const SPEED_PX_PER_SEC = 55
 
     const tick = (now: number) => {
       const dt = lastTimeRef.current ? now - lastTimeRef.current : 0
