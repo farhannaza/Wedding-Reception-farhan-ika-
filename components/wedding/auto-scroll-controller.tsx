@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 
-const START_EVENT = "wedding:start-autoscroll"
+const UNLOCK_EVENT = "wedding:start-autoscroll"
+const RUN_EVENT = "wedding:run-autoscroll"
 const RESUME_DELAY_MS = 2000
 const SPEED_PX_PER_SEC = 55
 
@@ -59,15 +60,23 @@ export function AutoScrollController() {
   }, [hasStarted])
 
   useEffect(() => {
-    const startAutoScroll = () => {
+    const unlockScroll = () => {
       setHasStarted(true)
-      if (!prefersReducedMotion) {
+    }
+
+    const runAutoScroll = () => {
+      setHasStarted(true)
+      if (!prefersReducedMotion && !isAtBottom()) {
         setIsRunning(true)
       }
     }
 
-    window.addEventListener(START_EVENT, startAutoScroll)
-    return () => window.removeEventListener(START_EVENT, startAutoScroll)
+    window.addEventListener(UNLOCK_EVENT, unlockScroll)
+    window.addEventListener(RUN_EVENT, runAutoScroll)
+    return () => {
+      window.removeEventListener(UNLOCK_EVENT, unlockScroll)
+      window.removeEventListener(RUN_EVENT, runAutoScroll)
+    }
   }, [prefersReducedMotion])
 
   useEffect(() => {

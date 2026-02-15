@@ -8,7 +8,11 @@ export function HeroSection() {
   const handleScrollStart = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     window.dispatchEvent(new Event("wedding:start-autoscroll"))
-    document.getElementById("details")?.scrollIntoView({ behavior: "smooth", block: "start" })
+    document.getElementById("details")?.scrollIntoView({ behavior: "auto", block: "start" })
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("wedding:run-autoscroll"))
+    })
   }
 
   return (
