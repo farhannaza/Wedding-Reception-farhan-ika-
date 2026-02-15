@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
 
 type RevealProps = {
   children: ReactNode
@@ -14,55 +14,47 @@ export function Reveal({
   delay = 0,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const [isVisible, setIsVisible] = useState(false)
   const [hasEntered, setHasEntered] = useState(false)
 
   useEffect(() => {
-    if (!ref.current) return
+    const node = ref.current
+    if (!node) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true)
           setHasEntered(true)
-        } else {
-          setIsVisible(false)
+          observer.unobserve(entry.target)
         }
       },
       {
-        threshold: 0.25,
+        threshold: 0.18,
+        rootMargin: "0px 0px -8% 0px",
       }
     )
 
-    observer.observe(ref.current)
+    observer.observe(node)
     return () => observer.disconnect()
   }, [])
 
-  const enterOffset = {
-    up: "translate-y-4",
-    down: "-translate-y-4",
-    left: "translate-x-4",
-    right: "-translate-x-4",
+  const offset = {
+    up: { x: 0, y: 44 },
+    down: { x: 0, y: -44 },
+    left: { x: 44, y: 0 },
+    right: { x: -44, y: 0 },
   }[direction]
 
-  const base =
-    "will-change-transform will-change-opacity transition-[opacity,transform]"
+  const style = {
+    "--reveal-x": `${offset.x}px`,
+    "--reveal-y": `${offset.y}px`,
+    animationDelay: hasEntered && delay ? `${delay}ms` : undefined,
+  } as CSSProperties
 
   return (
     <div
       ref={ref}
-      style={{
-        transitionDelay: delay ? `${delay}ms` : undefined,
-        transitionDuration: "2400ms",
-        transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-      }}
-      className={`${base} ${
-        !hasEntered
-          ? `opacity-0 ${enterOffset}` // first time only: slide in
-          : isVisible
-          ? "opacity-100 translate-x-0 translate-y-0" // visible
-          : "opacity-0" // exit: fade only, no direction flip
-      }`}
+      style={style}
+      className={`reveal-dramatic-base ${hasEntered ? "reveal-dramatic-enter" : "reveal-dramatic-hidden"}`}
     >
       {children}
     </div>
