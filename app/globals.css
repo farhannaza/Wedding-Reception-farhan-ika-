@@ -112,3 +112,20 @@ html {
 }
 
 /* RSVP messages - scroll controlled by JS for user + auto scroll */
+
+@keyframes details-reveal {
+  0% {
+    opacity: 0.2;
+    transform: translateY(22px) scale(0.985);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.details-reveal {
+  animation: details-reveal 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}

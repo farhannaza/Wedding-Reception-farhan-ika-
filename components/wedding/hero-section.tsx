@@ -8,11 +8,21 @@ export function HeroSection() {
   const handleScrollStart = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     window.dispatchEvent(new Event("wedding:start-autoscroll"))
-    document.getElementById("details")?.scrollIntoView({ behavior: "auto", block: "start" })
+    const detailsEl = document.getElementById("details")
 
-    requestAnimationFrame(() => {
+    if (detailsEl) {
+      const root = document.documentElement
+      const previousScrollBehavior = root.style.scrollBehavior
+      root.style.scrollBehavior = "auto"
+      detailsEl.scrollIntoView({ behavior: "auto", block: "start" })
+      root.style.scrollBehavior = previousScrollBehavior
+    }
+
+    window.dispatchEvent(new Event("wedding:reveal-details"))
+
+    setTimeout(() => {
       window.dispatchEvent(new Event("wedding:run-autoscroll"))
-    })
+    }, 450)
   }
 
   return (
