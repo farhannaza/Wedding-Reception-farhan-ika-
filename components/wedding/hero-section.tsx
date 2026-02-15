@@ -28,7 +28,7 @@ export function HeroSection() {
       setTimeout(() => {
         window.dispatchEvent(new Event("wedding:run-autoscroll"))
         transitionInProgressRef.current = false
-      }, 220)
+      }, 700)
     }
 
     if (prefersReducedMotion) {
@@ -40,22 +40,22 @@ export function HeroSection() {
     const startY = window.scrollY
     const targetY = detailsEl.getBoundingClientRect().top + window.scrollY
     const distance = targetY - startY
-    const durationMs = 900
+    const durationMs = 1050
     let startTime = 0
 
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+    const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5)
 
     const animate = (time: number) => {
       if (!startTime) startTime = time
       const elapsed = time - startTime
       const progress = Math.min(elapsed / durationMs, 1)
-      const eased = easeInOutCubic(progress)
+      const eased = easeOutQuint(progress)
       window.scrollTo(0, startY + distance * eased)
 
       if (progress < 1) {
         requestAnimationFrame(animate)
       } else {
+        window.scrollTo(0, targetY)
         finishTransition()
       }
     }
