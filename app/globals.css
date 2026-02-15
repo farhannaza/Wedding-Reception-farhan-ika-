@@ -164,7 +164,12 @@ html {
 
 .intro-gate-iris {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: min(120vmax, 1200px);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%) scale(0.2);
+  border-radius: 9999px;
   pointer-events: none;
   background:
     radial-gradient(
@@ -174,8 +179,7 @@ html {
       rgba(246, 244, 239, 0.78) 62%,
       rgba(244, 242, 237, 0.9) 100%
     );
-  transform: scale(0.22);
-  transform-origin: center;
+  transform-origin: center center;
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -262,14 +266,14 @@ html {
 @keyframes intro-iris-open {
   0% {
     opacity: 0;
-    transform: scale(0.22);
+    transform: translate(-50%, -50%) scale(0.2);
   }
   18% {
     opacity: 0.78;
-    transform: scale(0.44);
+    transform: translate(-50%, -50%) scale(0.42);
   }
   100% {
     opacity: 0;
-    transform: scale(2.25);
+    transform: translate(-50%, -50%) scale(2.35);
   }
 }
