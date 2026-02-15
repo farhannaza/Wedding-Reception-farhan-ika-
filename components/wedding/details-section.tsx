@@ -1,6 +1,6 @@
  "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { CalendarDays, Clock, MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import {
@@ -54,29 +54,10 @@ function DetailCard({
 }
 
 export function DetailsSection() {
-  const [isRevealing, setIsRevealing] = useState(false)
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout> | null = null
-
-    const handleReveal = () => {
-      setIsRevealing(true)
-      if (timeout) clearTimeout(timeout)
-      timeout = setTimeout(() => setIsRevealing(false), 700)
-    }
-
-    window.addEventListener("wedding:reveal-details", handleReveal)
-
-    return () => {
-      window.removeEventListener("wedding:reveal-details", handleReveal)
-      if (timeout) clearTimeout(timeout)
-    }
-  }, [])
-
   return (
     <section
       id="details"
-      className={`relative bg-background px-5 py-14 sm:px-6 md:py-28 ${isRevealing ? "details-reveal" : ""}`}
+      className="relative bg-background px-5 py-14 sm:px-6 md:py-28"
     >
       {/* Section header */}
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center sm:gap-4">

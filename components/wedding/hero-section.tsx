@@ -18,49 +18,35 @@ export function HeroSection() {
     window.dispatchEvent(new Event("wedding:start-autoscroll"))
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const root = document.documentElement
-    const previousScrollBehavior = root.style.scrollBehavior
-    root.style.scrollBehavior = "auto"
-
-    const finishTransition = () => {
-      root.style.scrollBehavior = previousScrollBehavior
-      window.dispatchEvent(new Event("wedding:reveal-details"))
-      setTimeout(() => {
-        window.dispatchEvent(new Event("wedding:run-autoscroll"))
-        transitionInProgressRef.current = false
-      }, 700)
-    }
 
     if (prefersReducedMotion) {
       detailsEl.scrollIntoView({ behavior: "auto", block: "start" })
-      finishTransition()
+      window.dispatchEvent(new Event("wedding:run-autoscroll"))
+      transitionInProgressRef.current = false
       return
     }
 
-    const startY = window.scrollY
     const targetY = detailsEl.getBoundingClientRect().top + window.scrollY
-    const distance = targetY - startY
-    const durationMs = 1050
-    let startTime = 0
+    detailsEl.scrollIntoView({ behavior: "smooth", block: "start" })
 
-    const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5)
+    const startedAt = performance.now()
+    let stableFrames = 0
 
-    const animate = (time: number) => {
-      if (!startTime) startTime = time
-      const elapsed = time - startTime
-      const progress = Math.min(elapsed / durationMs, 1)
-      const eased = easeOutQuint(progress)
-      window.scrollTo(0, startY + distance * eased)
+    const waitForSettle = () => {
+      const isNearTarget = Math.abs(window.scrollY - targetY) <= 2
+      stableFrames = isNearTarget ? stableFrames + 1 : 0
 
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      } else {
-        window.scrollTo(0, targetY)
-        finishTransition()
+      // Wait for a few stable frames or bail out after timeout.
+      if (stableFrames >= 6 || performance.now() - startedAt > 2200) {
+        window.dispatchEvent(new Event("wedding:run-autoscroll"))
+        transitionInProgressRef.current = false
+        return
       }
+
+      requestAnimationFrame(waitForSettle)
     }
 
-    requestAnimationFrame(animate)
+    requestAnimationFrame(waitForSettle)
   }
 
   return (
