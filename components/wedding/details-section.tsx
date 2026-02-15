@@ -24,6 +24,16 @@ const googleCalendarUrl =
   `&details=${encodeURIComponent(eventDescription)}` +
   `&location=${encodeURIComponent(eventLocation)}`
 
+const androidCalendarIntentUrl =
+  "intent://calendar.google.com/calendar/render?action=TEMPLATE" +
+  `&text=${encodeURIComponent(eventTitle)}` +
+  "&dates=20261018T030000Z/20261018T080000Z" +
+  `&details=${encodeURIComponent(eventDescription)}` +
+  `&location=${encodeURIComponent(eventLocation)}` +
+  `#Intent;scheme=https;package=com.google.android.calendar;S.browser_fallback_url=${encodeURIComponent(
+    googleCalendarUrl,
+  )};end`
+
 function DetailCard({
   icon,
   title,
@@ -183,8 +193,9 @@ export function DetailsSection() {
                   />
                 </a>
                 <a
-                  href="/calendar/farhan-syafika.ics"
-                  download
+                  href={androidCalendarIntentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Android Calendar</span>
