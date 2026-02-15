@@ -167,18 +167,52 @@ html {
   top: 0;
   bottom: 0;
   width: 50%;
-  background: rgba(246, 244, 239, 0.76);
-  transition: transform 1050ms cubic-bezier(0.2, 1, 0.22, 1), opacity 1050ms ease;
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.78), rgba(244, 240, 232, 0.82)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 12px,
+      rgba(0, 0, 0, 0.025) 12px,
+      rgba(0, 0, 0, 0.025) 24px
+    );
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: transform 1300ms cubic-bezier(0.2, 1, 0.22, 1), opacity 1100ms ease;
 }
 
 .intro-gate-left {
   left: 0;
+  transform-origin: left center;
   border-right: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: inset -12px 0 18px rgba(0, 0, 0, 0.08);
 }
 
 .intro-gate-right {
   right: 0;
+  transform-origin: right center;
   border-left: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: inset 12px 0 18px rgba(0, 0, 0, 0.08);
+}
+
+.intro-gate-left::after,
+.intro-gate-right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  pointer-events: none;
+}
+
+.intro-gate-left::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent);
+}
+
+.intro-gate-right::after {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.12), transparent);
 }
 
 .intro-gate-line {
@@ -223,12 +257,12 @@ html {
 }
 
 .intro-gate-opening .intro-gate-left {
-  transform: translateX(-102%);
+  transform: translateX(-108%) skewY(1.2deg) scaleX(0.985);
   opacity: 0;
 }
 
 .intro-gate-opening .intro-gate-right {
-  transform: translateX(102%);
+  transform: translateX(108%) skewY(-1.2deg) scaleX(0.985);
   opacity: 0;
 }
 
