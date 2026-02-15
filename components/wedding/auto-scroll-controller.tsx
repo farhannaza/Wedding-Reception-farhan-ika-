@@ -16,7 +16,10 @@ function isAtBottom() {
 }
 
 export function AutoScrollController() {
-  const [hasStarted, setHasStarted] = useState(false)
+  const [hasStarted, setHasStarted] = useState(() => {
+    if (typeof window === "undefined") return false
+    return window.scrollY > 8 || window.location.hash.length > 0
+  })
   const [isRunning, setIsRunning] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const rafRef = useRef<number | null>(null)
@@ -34,6 +37,25 @@ export function AutoScrollController() {
   useEffect(() => {
     lockPageScroll(!hasStarted)
     return () => lockPageScroll(false)
+  }, [hasStarted])
+
+  useEffect(() => {
+    if (hasStarted) return
+
+    // Some browsers restore scroll position after mount on reload/back-forward.
+    let raf2 = 0
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        if (window.scrollY > 8 || window.location.hash.length > 0) {
+          setHasStarted(true)
+        }
+      })
+    })
+
+    return () => {
+      cancelAnimationFrame(raf1)
+      if (raf2) cancelAnimationFrame(raf2)
+    }
   }, [hasStarted])
 
   useEffect(() => {
