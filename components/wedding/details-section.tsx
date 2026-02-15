@@ -144,47 +144,47 @@ export function DetailsSection() {
                 Simpan Tarikh
               </button>
             </DialogTrigger>
-            <DialogContent className="border-gold/20 bg-card text-center">
+            <DialogContent className="border-gold/20 bg-card">
               <DialogHeader className="text-center">
                 <DialogTitle className="text-center font-serif text-2xl font-bold text-foreground">
                   Simpan Tarikh
                 </DialogTitle>
-                <DialogDescription className="text-center font-sans text-sm text-muted-foreground">
+                <DialogDescription className="text-center font-sans text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
                   Ahad, 18 Oktober 2026
                   <br />
                   11:00 AM - 4:00 PM
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="mt-2 flex items-center justify-center gap-4">
+              <div className="mt-1 grid grid-cols-3 gap-3">
                 <a
                   href={googleCalendarUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                  className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Google Calendar</span>
                   <img
                     src="/images/google-maps-logo.svg"
                     alt="Google"
-                    className="h-6 w-6"
+                    className="h-7 w-7"
                   />
                 </a>
                 <a
                   href="/calendar/farhan-syafika.ics"
                   download
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                  className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Apple Calendar</span>
-                  <Apple className="h-6 w-6" />
+                  <Apple className="h-7 w-7" />
                 </a>
                 <a
                   href="/calendar/farhan-syafika.ics"
                   download
-                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                  className="flex min-h-[52px] items-center justify-center rounded-lg border border-gold/20 bg-background/40 text-foreground transition-colors hover:border-gold/50 hover:bg-gold/5"
                 >
                   <span className="sr-only">Android Calendar</span>
-                  <Bot className="h-6 w-6" />
+                  <Bot className="h-7 w-7" />
                 </a>
               </div>
             </DialogContent>
