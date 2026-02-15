@@ -32,10 +32,10 @@ export function Navigation() {
     <>
       {/* Desktop top nav */}
       <nav
-        className={`fixed left-0 right-0 top-0 z-50 hidden items-center justify-center gap-8 px-4 py-4 transition-all duration-500 md:flex ${
+        className={`fixed left-0 right-0 top-0 z-50 hidden items-center justify-center gap-8 px-4 py-4 transform-gpu will-change-transform transition-all duration-500 ease-out md:flex ${
           scrolled
-            ? "bg-foreground/95 shadow-lg shadow-black/10 backdrop-blur-md"
-            : "bg-transparent"
+            ? "translate-y-0 opacity-100 bg-foreground/95 shadow-lg shadow-black/10 backdrop-blur-md"
+            : "-translate-y-4 opacity-0 pointer-events-none bg-transparent"
         }`}
         aria-label="Main navigation"
       >
@@ -71,8 +71,8 @@ export function Navigation() {
 
       {/* Mobile bottom nav - sticky, appears after scrolling past hero */}
       <nav
-        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-transform transition-opacity duration-500 ease-out md:hidden ${
-          scrolled ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
+        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-all duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
+          scrolled ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.985] opacity-0 pointer-events-none"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         aria-label="Mobile navigation"
