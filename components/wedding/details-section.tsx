@@ -1,6 +1,16 @@
+ "use client"
+
 import React from "react"
-import { CalendarDays, Clock, MapPin } from "lucide-react"
+import { CalendarDays, Clock, MapPin, Apple, Bot } from "lucide-react"
 import { Reveal } from "@/components/reveal"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const eventTitle = "Majlis Kesyukuran Perkahwinan Farhan & Syafika"
 const eventLocation = "British Vogue By Kamalinda, Ecohill Semenyih"
@@ -102,61 +112,83 @@ export function DetailsSection() {
       <div className="mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3 sm:gap-6">
         <Reveal direction="up">
           <DetailCard
+            icon={<MapPin className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
+            title="Lokasi"
+            lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
+          />
+        </Reveal>
+        <Reveal direction="up" delay={100}>
+          <DetailCard
             icon={<CalendarDays className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
             title="Tarikh"
             lines={["Ahad", "18 Oktober 2026"]}
           />
         </Reveal>
-        <Reveal direction="up" delay={100}>
+        <Reveal direction="up" delay={200}>
           <DetailCard
             icon={<Clock className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
             title="Masa"
             lines={["11:00 AM -", "4:00 PM"]}
           />
         </Reveal>
-        <Reveal direction="up" delay={200}>
-          <DetailCard
-            icon={<MapPin className="h-6 w-6 text-gold sm:h-7 sm:w-7" />}
-            title="Lokasi"
-            lines={["British Vogue By Kamalinda", "Ecohill Semenyih"]}
-          />
-        </Reveal>
       </div>
 
-      <div className="mx-auto mt-10 max-w-4xl sm:mt-14">
+      <div className="mx-auto mt-10 flex max-w-4xl justify-center sm:mt-14">
         <Reveal direction="up" delay={300}>
-          <div className="rounded-xl border border-gold/20 bg-card p-5 text-center sm:p-6">
-            <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-gold sm:text-xs">
-              Add To Calendar
-            </p>
-            <p className="mt-2 font-sans text-[13px] text-foreground/70 sm:text-sm">
-              Save the date and time to your preferred calendar app.
-            </p>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <a
-                href={googleCalendarUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                type="button"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-lg border border-gold/30 bg-card px-6 py-3 font-sans text-[12px] font-medium uppercase tracking-[0.15em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
               >
-                Google Calendar
-              </a>
-              <a
-                href="/calendar/farhan-syafika.ics"
-                download
-                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
-              >
-                Apple Calendar
-              </a>
-              <a
-                href="/calendar/farhan-syafika.ics"
-                download
-                className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-gold/30 bg-background px-4 py-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:text-xs sm:hover:border-gold/60 sm:hover:bg-gold/10"
-              >
-                Android Calendar
-              </a>
-            </div>
-          </div>
+                Simpan Tarikh
+              </button>
+            </DialogTrigger>
+            <DialogContent className="border-gold/20 bg-card text-center">
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-center font-serif text-2xl font-bold text-foreground">
+                  Simpan Tarikh
+                </DialogTitle>
+                <DialogDescription className="text-center font-sans text-sm text-muted-foreground">
+                  Ahad, 18 Oktober 2026
+                  <br />
+                  11:00 AM - 4:00 PM
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="mt-2 flex items-center justify-center gap-4">
+                <a
+                  href={googleCalendarUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                >
+                  <span className="sr-only">Google Calendar</span>
+                  <img
+                    src="/images/google-maps-logo.svg"
+                    alt="Google"
+                    className="h-6 w-6"
+                  />
+                </a>
+                <a
+                  href="/calendar/farhan-syafika.ics"
+                  download
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                >
+                  <span className="sr-only">Apple Calendar</span>
+                  <Apple className="h-6 w-6" />
+                </a>
+                <a
+                  href="/calendar/farhan-syafika.ics"
+                  download
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-background text-foreground transition-colors active:border-gold/60 active:bg-gold/10 sm:hover:border-gold/60 sm:hover:bg-gold/10"
+                >
+                  <span className="sr-only">Android Calendar</span>
+                  <Bot className="h-6 w-6" />
+                </a>
+              </div>
+            </DialogContent>
+          </Dialog>
         </Reveal>
       </div>
 
