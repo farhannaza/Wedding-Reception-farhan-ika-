@@ -1,28 +1,66 @@
 "use client"
 
-import type { MouseEvent } from "react"
+import { useRef, type MouseEvent } from "react"
 import Image from "next/image"
 import { Reveal } from "@/components/reveal"
 
 export function HeroSection() {
+  const transitionInProgressRef = useRef(false)
+
   const handleScrollStart = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    window.dispatchEvent(new Event("wedding:start-autoscroll"))
-    const detailsEl = document.getElementById("details")
+    if (transitionInProgressRef.current) return
 
-    if (detailsEl) {
-      const root = document.documentElement
-      const previousScrollBehavior = root.style.scrollBehavior
-      root.style.scrollBehavior = "auto"
-      detailsEl.scrollIntoView({ behavior: "auto", block: "start" })
+    const detailsEl = document.getElementById("details")
+    if (!detailsEl) return
+
+    transitionInProgressRef.current = true
+    window.dispatchEvent(new Event("wedding:start-autoscroll"))
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const root = document.documentElement
+    const previousScrollBehavior = root.style.scrollBehavior
+    root.style.scrollBehavior = "auto"
+
+    const finishTransition = () => {
       root.style.scrollBehavior = previousScrollBehavior
+      window.dispatchEvent(new Event("wedding:reveal-details"))
+      setTimeout(() => {
+        window.dispatchEvent(new Event("wedding:run-autoscroll"))
+        transitionInProgressRef.current = false
+      }, 220)
     }
 
-    window.dispatchEvent(new Event("wedding:reveal-details"))
+    if (prefersReducedMotion) {
+      detailsEl.scrollIntoView({ behavior: "auto", block: "start" })
+      finishTransition()
+      return
+    }
 
-    setTimeout(() => {
-      window.dispatchEvent(new Event("wedding:run-autoscroll"))
-    }, 450)
+    const startY = window.scrollY
+    const targetY = detailsEl.getBoundingClientRect().top + window.scrollY
+    const distance = targetY - startY
+    const durationMs = 900
+    let startTime = 0
+
+    const easeInOutCubic = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+
+    const animate = (time: number) => {
+      if (!startTime) startTime = time
+      const elapsed = time - startTime
+      const progress = Math.min(elapsed / durationMs, 1)
+      const eased = easeInOutCubic(progress)
+      window.scrollTo(0, startY + distance * eased)
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        finishTransition()
+      }
+    }
+
+    requestAnimationFrame(animate)
   }
 
   return (
