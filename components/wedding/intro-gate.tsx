@@ -60,9 +60,7 @@ export function IntroGate() {
       aria-hidden={stage !== "closed"}
     >
       <div className="intro-gate-bg" />
-      <div className="intro-gate-left" />
-      <div className="intro-gate-right" />
-      <div className="intro-gate-line" />
+      <div className="intro-gate-iris" />
 
       <button
         type="button"
