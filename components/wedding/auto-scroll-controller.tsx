@@ -19,7 +19,7 @@ function isAtBottom() {
 export function AutoScrollController() {
   const [hasStarted, setHasStarted] = useState(() => {
     if (typeof window === "undefined") return false
-    return window.scrollY > 8 || window.location.hash.length > 0
+    return window.location.hash.length > 0
   })
   const [isRunning, setIsRunning] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
@@ -41,23 +41,24 @@ export function AutoScrollController() {
   }, [hasStarted])
 
   useEffect(() => {
-    if (hasStarted) return
+    // Force a consistent first-load state on mobile: always start at hero unless hash is present.
+    const previousRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = "manual"
 
-    // Some browsers restore scroll position after mount on reload/back-forward.
-    let raf2 = 0
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        if (window.scrollY > 8 || window.location.hash.length > 0) {
-          setHasStarted(true)
-        }
+    let rafId = 0
+    if (window.location.hash.length === 0) {
+      rafId = requestAnimationFrame(() => {
+        window.scrollTo(0, 0)
       })
-    })
+    } else {
+      setHasStarted(true)
+    }
 
     return () => {
-      cancelAnimationFrame(raf1)
-      if (raf2) cancelAnimationFrame(raf2)
+      if (rafId) cancelAnimationFrame(rafId)
+      window.history.scrollRestoration = previousRestoration
     }
-  }, [hasStarted])
+  }, [])
 
   useEffect(() => {
     const unlockScroll = () => {
