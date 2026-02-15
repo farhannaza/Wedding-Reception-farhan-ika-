@@ -170,15 +170,15 @@ export function RsvpForm() {
                 id="pax"
                 type="number"
                 min={1}
-                max={20}
+                max={2}
                 required
                 value={pax}
-                onChange={(e) => setPax(Math.max(1, Math.min(20, parseInt(e.target.value) || 1)))}
+                onChange={(e) => setPax(Math.max(1, Math.min(2, parseInt(e.target.value) || 1)))}
                 className="h-12 w-20 rounded-lg border border-gold/20 bg-card px-4 text-center font-sans text-base text-foreground focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30 sm:h-10 sm:text-sm"
               />
               <button
                 type="button"
-                onClick={() => setPax(Math.min(20, pax + 1))}
+                onClick={() => setPax(Math.min(2, pax + 1))}
                 className="flex h-12 w-12 items-center justify-center rounded-lg border border-gold/20 bg-card font-sans text-xl text-foreground transition-colors active:border-gold/50 active:bg-gold/10 sm:h-10 sm:w-10 sm:text-lg sm:hover:border-gold/50 sm:hover:bg-gold/10"
                 aria-label="Increase guests"
               >
