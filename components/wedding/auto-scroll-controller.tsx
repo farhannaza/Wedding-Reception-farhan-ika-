@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react"
 
 const UNLOCK_EVENT = "wedding:start-autoscroll"
 const RUN_EVENT = "wedding:run-autoscroll"
-const RESUME_DELAY_MS = 2000
 const SPEED_PX_PER_SEC = 55
 
 function lockPageScroll(lock: boolean) {
@@ -25,7 +24,6 @@ export function AutoScrollController() {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const rafRef = useRef<number | null>(null)
   const lastTimeRef = useRef(0)
-  const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -83,31 +81,23 @@ export function AutoScrollController() {
   useEffect(() => {
     if (!hasStarted) return
 
-    const pauseAndResume = () => {
+    const pauseAutoScroll = () => {
       setIsRunning(false)
       lastTimeRef.current = 0
-
-      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
-      resumeTimeoutRef.current = setTimeout(() => {
-        if (!isAtBottom() && !prefersReducedMotion) {
-          setIsRunning(true)
-        }
-      }, RESUME_DELAY_MS)
     }
 
-    window.addEventListener("wheel", pauseAndResume, { passive: true })
-    window.addEventListener("touchstart", pauseAndResume, { passive: true })
-    window.addEventListener("pointerdown", pauseAndResume, { passive: true })
-    window.addEventListener("keydown", pauseAndResume)
+    window.addEventListener("wheel", pauseAutoScroll, { passive: true })
+    window.addEventListener("touchstart", pauseAutoScroll, { passive: true })
+    window.addEventListener("pointerdown", pauseAutoScroll, { passive: true })
+    window.addEventListener("keydown", pauseAutoScroll)
 
     return () => {
-      window.removeEventListener("wheel", pauseAndResume)
-      window.removeEventListener("touchstart", pauseAndResume)
-      window.removeEventListener("pointerdown", pauseAndResume)
-      window.removeEventListener("keydown", pauseAndResume)
-      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current)
+      window.removeEventListener("wheel", pauseAutoScroll)
+      window.removeEventListener("touchstart", pauseAutoScroll)
+      window.removeEventListener("pointerdown", pauseAutoScroll)
+      window.removeEventListener("keydown", pauseAutoScroll)
     }
-  }, [hasStarted, prefersReducedMotion])
+  }, [hasStarted])
 
   useEffect(() => {
     if (!hasStarted || !isRunning || prefersReducedMotion) return

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { CalendarDays, MapPin, Mail, ChevronUp, PhoneCall } from "lucide-react"
+import { CalendarDays, MapPin, Mail, Play, PhoneCall } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,6 +15,10 @@ import {
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
+
+  const runAutoScroll = () => {
+    window.dispatchEvent(new Event("wedding:run-autoscroll"))
+  }
 
   useEffect(() => {
     function handleScroll() {
@@ -56,12 +60,13 @@ export function Navigation() {
         >
           RSVP
         </a>
-        <a
-          href="#"
+        <button
+          type="button"
+          onClick={runAutoScroll}
           className="font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-gold/70 transition-colors hover:text-gold md:text-xs"
         >
-          Top
-        </a>
+          Auto Scroll
+        </button>
       </nav>
 
       {/* Mobile bottom nav - sticky, appears after scrolling past hero */}
@@ -160,15 +165,16 @@ export function Navigation() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          <a
-            href="#"
+          <button
+            type="button"
+            onClick={runAutoScroll}
             className="flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 text-gold/70 transition-colors active:text-gold"
           >
-            <ChevronUp className="h-5 w-5" />
+            <Play className="h-5 w-5" />
             <span className="font-sans text-[10px] font-medium uppercase tracking-wider">
-              Top
+              Auto
             </span>
-          </a>
+          </button>
         </div>
       </nav>
     </>
