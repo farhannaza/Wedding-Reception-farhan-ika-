@@ -71,8 +71,8 @@ export function Navigation() {
 
       {/* Mobile bottom nav - sticky, appears after scrolling past hero */}
       <nav
-        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-all duration-900 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${
-          scrolled ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.985] opacity-0 pointer-events-none"
+        className={`fixed bottom-0 left-0 right-0 z-50 border-t border-gold/20 bg-foreground/95 backdrop-blur-md transform-gpu will-change-transform transition-all duration-[1350ms] ease-[cubic-bezier(0.2,1,0.22,1)] md:hidden ${
+          scrolled ? "translate-y-0 scale-100 opacity-100" : "translate-y-10 scale-[0.96] opacity-0 pointer-events-none"
         }`}
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         aria-label="Mobile navigation"
