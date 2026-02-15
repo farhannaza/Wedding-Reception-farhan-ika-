@@ -6,7 +6,7 @@ const UNLOCK_EVENT = "wedding:start-autoscroll"
 const RUN_EVENT = "wedding:run-autoscroll"
 const INTRO_OPEN_EVENT = "wedding:intro-opened"
 
-const OPEN_ANIMATION_MS = 900
+const OPEN_ANIMATION_MS = 1200
 const HERO_WORD_REVEAL_WAIT_MS = 3200
 
 export function IntroGate() {
@@ -70,10 +70,7 @@ export function IntroGate() {
         className="intro-gate-button"
         aria-label="Open invitation"
       >
-        <span className="intro-gate-script">Farhan</span>
-        <span className="intro-gate-amp">&amp;</span>
-        <span className="intro-gate-script">Syafika</span>
-        <span className="intro-gate-open">Buka</span>
+        <span className="intro-gate-script">F &amp; S</span>
       </button>
     </div>
   )
